@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metas Semanais - Antigravity</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho Principal -->
+        <header class="header-principal">
+            <div class="titulo" id="tituloSemana">Carregando...</div>
+        </header>
+
+        <!-- Barra de Progresso Semanal -->
+        <div class="progresso-container" id="progresso-container" style="display: none;">
+            <div class="progresso-texto">
+                <span>Progresso da Semana</span>
+                <span id="progressoSemanaTexto">0/28</span>
+            </div>
+            <div class="progresso-barra-bg">
+                <div class="progresso-barra-fill" id="progressoBarraFill"></div>
+            </div>
+        </div>
+
+        <!-- Lista de Metas (28 metas) -->
+        <div id="listaMetas">
+            <div style="text-align: center; color: var(--color-cinza-verdeado); padding: 40px;">
+                Carregando suas metas da semana...
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Global -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 style="margin-top: 0; color: var(--color-preto-azulado); margin-bottom: 24px; font-family: 'Outfit', sans-serif;">Concluir Meta</h3>
+            
+            <label style="font-size: 14px; font-weight: 600; color: var(--color-preto-azulado); margin-bottom: 4px; display: block;">Quantidade de questões <span style="color: var(--color-vermelho);">*</span></label>
+            <input type="number" class="input" id="qtdQuestoes" placeholder="Ex: 50" min="1" required>
+            
+            <label style="font-size: 14px; font-weight: 600; color: var(--color-preto-azulado); margin-bottom: 4px; display: block;">Quantidade de acertos <span style="color: var(--color-vermelho);">*</span></label>
+            <input type="number" class="input" id="qtdAcertos" placeholder="Ex: 40" min="0" required>
+            
+            <label style="font-size: 14px; font-weight: 600; color: var(--color-preto-azulado); margin-bottom: 4px; display: block;">Link caderno de erradas <span>(opcional)</span></label>
+            <input type="url" class="input" id="linkErros" placeholder="https://...">
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="botao" style="flex: 1; background-color: var(--color-cinza-verdeado);" onclick="fecharModal()">
+                    Cancelar
+                </button>
+                <button class="botao" style="flex: 2;" id="btnSalvarResposta" onclick="salvarResposta()">
+                    Salvar Progresso
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts da Aplicação (Supabase desativado para o mock puro funcionar sem erros no console) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+    <!-- <script src="js/supabase-init.js"></script> -->
+    <script src="js/app.js?v=2"></script>
+</body>
+</html>
