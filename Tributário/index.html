@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #FAFAFA;
+      padding: 1.5rem;
+      color: #1E2B38
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px
+    }
+
+    .scard {
+      background: #fff;
+      border: 0.5px solid #E8E8EC;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center
+    }
+
+    .scard .n {
+      font-size: 26px;
+      font-weight: 500
+    }
+
+    .scard .l {
+      font-size: 11px;
+      color: #8A8A97;
+      margin-top: 3px
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid #E8E8EC;
+      margin-bottom: 14px
+    }
+
+    .tab {
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: #8A8A97;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all .15s
+    }
+
+    .tab.active {
+      color: #1E2B38;
+      border-bottom-color: #1E2B38
+    }
+
+    .panel {
+      display: none
+    }
+
+    .panel.active {
+      display: block
+    }
+
+    .item {
+      background: #fff;
+      border: 0.5px solid #E8E8EC;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color .15s
+    }
+
+    .item:hover {
+      border-color: #B5B5C0
+    }
+
+    .item.open {
+      border-color: #1E2B38
+    }
+
+    .item-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      margin-top: 3px
+    }
+
+    .b-bug {
+      background: #FCEBEB;
+      color: #A32D2D;
+      border: 0.5px solid #F09595
+    }
+
+    .b-warn {
+      background: #FAEEDA;
+      color: #854F0B;
+      border: 0.5px solid #FAC775
+    }
+
+    .b-tip {
+      background: #EEEDFE;
+      color: #3C3489;
+      border: 0.5px solid #AFA9EC
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1
+    }
+
+    .item-sub {
+      font-size: 12px;
+      color: #8A8A97;
+      margin-top: 2px
+    }
+
+    .detail {
+      font-size: 12px;
+      color: #5F5E5A;
+      line-height: 1.65;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid #F0F0F3;
+      display: none
+    }
+
+    .item.open .detail {
+      display: block
+    }
+
+    .code {
+      font-family: monospace;
+      font-size: 11px;
+      background: #F1EFE8;
+      border: 0.5px solid #D3D1C7;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 7px 0;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      color: #1E2B38
+    }
+
+    .fix {
+      background: #EAF3DE;
+      border: 0.5px solid #C0DD97;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 7px 0;
+      font-family: monospace;
+      font-size: 11px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      color: #27500A
+    }
+  </style>
+</head>
+
+<body>
+  <div class="summary">
+    <div class="scard">
+      <div class="n" style="color:#A32D2D">2</div>
+      <div class="l">Bugs reais</div>
+    </div>
+    <div class="scard">
+      <div class="n" style="color:#854F0B">3</div>
+      <div class="l">Atenção</div>
+    </div>
+    <div class="scard">
+      <div class="n" style="color:#3C3489">4</div>
+      <div class="l">Melhorias</div>
+    </div>
+    <div class="scard">
+      <div class="n" style="color:#3B6D11">✓</div>
+      <div class="l">Estrutura ok</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('bugs',this)">Bugs reais</button>
+    <button class="tab" onclick="showTab('atencao',this)">Atenção</button>
+    <button class="tab" onclick="showTab('melhorias',this)">Melhorias</button>
+  </div>
+
+  <div id="bugs" class="panel active">
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-bug">Bug</span>
+        <div>
+          <div class="item-title">user faltando no useCallback de salvar</div>
+          <div class="item-sub">Stale closure — pode salvar com user desatualizado</div>
+        </div>
+      </div>
+      <div class="detail">
+        A função <code>salvar</code> usa <code>user</code> internamente, mas não o inclui nas dependências do
+        <code>useCallback</code>:
+        <div class="code">const salvar = useCallback(async () => {
+          ...
+          if (!user) { setFormErr("..."); return; }
+          await supabase.from("respostas").insert([{ user_id: user.id, ... }]);
+          }, [form, modal, timerRunning, timerStartedAt]); // ← user ausente!</div>
+        O <code>useCallback</code> captura o <code>user</code> do momento da criação (inicialmente <code>null</code>). O
+        guard <code>if (!user)</code> protege na maioria dos casos, mas o closure fica tecnicamente obsoleto após o
+        init() autenticar.
+        <div class="fix">// Correto — adicionar user às deps:
+          }, [form, modal, timerRunning, timerStartedAt, user]);</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-bug">Bug</span>
+        <div>
+          <div class="item-title">discColorMap vaza para stats e modal</div>
+          <div class="item-sub">Disciplinas fora da semana atual ficam sem cor</div>
+        </div>
+      </div>
+      <div class="detail">
+        <code>discColorMap</code> é construído apenas das disciplinas da semana atual:
+        <div class="code">const grouped = metas.reduce(...); // só semana atual
+          const discColorMap = Object.fromEntries(
+          Object.keys(grouped).map((d, i) => [d, i])
+          );</div>
+        Mas é usado nas estatísticas "Por Disciplina" (que agrega todas as semanas). Se uma disciplina da semana 1 não
+        está na semana atual, <code>discColorMap[disc]</code> é <code>undefined</code>, causando <code>getC(NaN)</code>
+        = cor <code>undefined</code>.
+        <div class="fix">// Calcular de todas as disciplinas do banco, uma vez só:
+          const allDiscs = [...new Set(metasBanco.map(m => m.disciplina))];
+          const discColorMap = Object.fromEntries(allDiscs.map((d, i) => [d, i]));</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="atencao" class="panel">
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-warn">Atenção</span>
+        <div>
+          <div class="item-title">Insert sem verificação de erro</div>
+          <div class="item-sub">Estado local atualiza mesmo se o Supabase falhar</div>
+        </div>
+      </div>
+      <div class="detail">
+        Em <code>salvar</code> e no botão "Revisei", o resultado do insert é ignorado:
+        <div class="code">await supabase.from("respostas").insert([...]);
+          setRespostas(prev => [...prev, { ... }]); // roda sempre!</div>
+        Se o insert falhar (sem internet, RLS bloqueando), a meta aparece concluída na UI mas não foi salva. Ao
+        recarregar, some.
+        <div class="fix">const { error } = await supabase.from("respostas").insert([...]);
+          if (error) {
+          setFormErr("Erro ao salvar. Verifique sua conexão.");
+          return; // não atualiza o estado local
+          }
+          setRespostas(prev => [...prev, novaResposta]);</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-warn">Atenção</span>
+        <div>
+          <div class="item-title">Nav pill branca no dark mode</div>
+          <div class="item-sub">background hardcoded rgba(255,255,255,.72) não respeita tema escuro</div>
+        </div>
+      </div>
+      <div class="detail">
+        O <code>PillNav</code> recebe <code>darkMode</code> como prop, mas o background da nav usa branco fixo:
+        <div class="code">background: "rgba(255,255,255,.72)" // sempre branco</div>
+        Em dark mode, a nav fica branca sobre fundo <code>#0F172A</code>. Contraste quebrado.
+        <div class="fix">background: darkMode
+          ? "rgba(15,23,42,.85)"
+          : "rgba(255,255,255,.72)"</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-warn">Atenção</span>
+        <div>
+          <div class="item-title">tempo_min ausente no useState inicial</div>
+          <div class="item-sub">form.tempo_min é undefined até o modal ser aberto</div>
+        </div>
+      </div>
+      <div class="detail">
+        O estado inicial do form não inclui <code>tempo_min</code>:
+        <div class="code">const [form, setForm] = useState({
+          qtd_questoes: "", qtd_acertos: "", link_erros: ""
+          // tempo_min ausente
+          });</div>
+        Na prática não causa problema porque o modal sempre chama <code>setForm</code> com <code>tempo_min</code> antes
+        de permitir salvar. Mas é uma inconsistência que pode confundir.
+        <div class="fix">const [form, setForm] = useState({
+          qtd_questoes: "", qtd_acertos: "",
+          link_erros: "", tempo_min: ""
+          });</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="melhorias" class="panel">
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-tip">Melhoria</span>
+        <div>
+          <div class="item-title">sbd e historico usam busca linear O(n²)</div>
+          <div class="item-sub">metasBanco.find() para cada resposta — escala mal</div>
+        </div>
+      </div>
+      <div class="detail">
+        Em vários lugares, para cada resposta é feita uma busca linear no array de metas:
+        <div class="code">const m = metasBanco.find(x => x.id === r.meta_id); // O(n) por resp</div>
+        Com 100 respostas e 500 metas = 50.000 comparações por render. Usar um Map:
+        <div class="fix">// Como useMemo, calculado uma vez:
+          const metasById = useMemo(
+          () => new Map(metasBanco.map(m => [m.id, m])),
+          [metasBanco]
+          );
+
+          // Substituir .find() por:
+          const m = metasById.get(r.meta_id);</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-tip">Melhoria</span>
+        <div>
+          <div class="item-title">gerarExtras recalculada em todo render</div>
+          <div class="item-sub">Chamada 3 vezes por render — candidata a useMemo</div>
+        </div>
+      </div>
+      <div class="detail">
+        <code>gerarExtras</code> itera sobre respostas e metas, e é chamada no dashboard, nas stats e no histórico a
+        cada render.
+        <div class="fix">const extras = useMemo(
+          () => gerarExtras(semana, respostas, metasBanco),
+          [semana, respostas, metasBanco]
+          );</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-tip">Melhoria</span>
+        <div>
+          <div class="item-title">Nenhum feedback ao completar todas as metas</div>
+          <div class="item-sub">Dashboard fica vazio quando prog === MPW</div>
+        </div>
+      </div>
+      <div class="detail">
+        Quando as 14 metas são concluídas, <code>metas</code> fica vazio (filtro anti-repetição remove todas) e o
+        dashboard mostra apenas o cabeçalho, sem mensagem alguma.
+        <div class="fix">{metas.length === 0 && prog >= MPW && (
+          &lt;div style={{ textAlign:"center", padding:"40px 0" }}&gt;
+          &lt;div style={{ fontFamily:"'Lora',serif", fontSize:18 }}&gt;
+          Semana {semana} concluída! 🎉
+          &lt;/div&gt;
+          &lt;div style={{ color: C.muted, marginTop:6, fontSize:13 }}&gt;
+          A Semana {semana+1} já está disponível.
+          &lt;/div&gt;
+          &lt;/div&gt;
+          )}</div>
+      </div>
+    </div>
+
+    <div class="item" onclick="this.classList.toggle('open')">
+      <div class="item-head"><span class="badge b-tip">Melhoria</span>
+        <div>
+          <div class="item-title">Sem fallback para plano sem metas</div>
+          <div class="item-sub">Se metasBanco estiver vazio, dashboard fica em branco sem explicação</div>
+        </div>
+      </div>
+      <div class="detail">
+        Se o plano do usuário não tiver metas cadastradas (ou a tabela estiver vazia), o dashboard exibe "Semana 1 — 0
+        de 14 metas concluídas" e nenhum card. O usuário não entende o que houve.
+        <div class="fix">{metasBanco.length === 0 && !loadingMetas && (
+          &lt;div style={{ textAlign:"center", color: C.muted, padding:"40px 0" }}&gt;
+          Nenhuma meta encontrada para o plano "{plano}".
+          &lt;br/&gt;
+          &lt;span style={{ fontSize:12 }}&gt;Contate o administrador.&lt;/span&gt;
+          &lt;/div&gt;
+          )}</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(id, btn) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
