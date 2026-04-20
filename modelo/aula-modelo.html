@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- ✏️ ALTERE O TÍTULO ABAIXO -->
+    <title>Prof. Wilsinho Tavares — Nome da Aula</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- CSS compartilhado — caminho relativo a partir desta pasta -->
+    <link rel="stylesheet" href="../estilo.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- ============================================================
+             SUMÁRIO (opcional — apague se não precisar)
+        ============================================================ -->
+        <div class="sumario-container">
+            <div class="sumario-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="sumario-icon">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                Índice da Aula
+            </div>
+            <div class="sumario-body">
+                <ul class="sumario-list">
+                    <!-- ✏️ ADICIONE OS ITENS DO SUMÁRIO ABAIXO -->
+                    <li class="sumario-item-h2"><a href="#secao-1">Seção 1</a></li>
+                    <li class="sumario-item-h2"><a href="#secao-2">Seção 2</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             TABELA DE LAYOUT — mantém cabeçalho e rodapé em cada página
+             NÃO REMOVA esta estrutura. É ela que repete no print.
+        ============================================================ -->
+        <table class="layout-table">
+
+            <!-- CABEÇALHO REPETIDO EM CADA PÁGINA NO PRINT -->
+            <thead>
+                <tr>
+                    <td>
+                        <div class="print-header">
+                            <div class="header-top">
+                                <img src="../Logooficial.png" alt="Logo Prof. Wilsinho Tavares" class="header-logo">
+                                <span class="prof-name">Prof. Wilsinho Tavares</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+
+            <!-- CONTEÚDO DA AULA -->
+            <tbody>
+                <tr>
+                    <td>
+
+                        <!-- ✏️ TÍTULO E SUBTÍTULO DA AULA -->
+                        <div class="header-main">
+                            <h1>Nome da Disciplina — Aula XX</h1>
+                            <p class="subtitle">Subtítulo ou tema da aula</p>
+                        </div>
+
+                        <div class="content">
+
+                            <!-- ======================================================
+                                 SEÇÃO 1
+                            ====================================================== -->
+                            <div class="section-title" id="secao-1">Título da Seção 1</div>
+
+                            <p>Texto introdutório da seção.</p>
+
+                            <!-- Dispositivo legal -->
+                            <div class="dispositivo">
+                                Art. XX — Texto do dispositivo legal aqui.
+                            </div>
+
+                            <p>Comentário sobre o dispositivo.</p>
+
+                            <!-- Imagem (coloque o arquivo na mesma pasta que este HTML) -->
+                            <div class="img-bloco">
+                                <img src="001.png" alt="Descrição da imagem">
+                            </div>
+
+                            <!-- ======================================================
+                                 SEÇÃO 2
+                            ====================================================== -->
+                            <div class="section-title" id="secao-2">Título da Seção 2</div>
+
+                            <p>Texto da seção 2.</p>
+
+                            <!-- Súmula -->
+                            <div class="sumula">
+                                <span class="sumula-label">Súmula Vinculante XX</span>
+                                "Texto da súmula."
+                            </div>
+
+                            <!-- Lista -->
+                            <ul class="lista">
+                                <li>Item 1</li>
+                                <li>Item 2</li>
+                            </ul>
+
+                            <!-- Alerta / Atenção -->
+                            <div class="alerta">
+                                <strong>IMPORTANTE:</strong><br><br>
+                                Texto de destaque importante para o aluno.
+                            </div>
+
+                            <!-- Questão de prova (com gabarito e comentários ocultos) -->
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão — Banca / Ano</span>
+                                <p class="questao-enunciado">
+                                    Enunciado da questão de prova aqui.
+                                </p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> Alternativa A.</li>
+                                    <li><span class="alt-letra">B)</span> Alternativa B.</li>
+                                    <li class="alt-correta"><span class="alt-letra">C)</span> Alternativa correta.</li>
+                                    <li><span class="alt-letra">D)</span> Alternativa D.</li>
+                                    <li><span class="alt-letra">E)</span> Alternativa E.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários</summary>
+                                    <ul class="comentarios-list">
+                                        <li><strong>A)</strong> Errada — explicação.</li>
+                                        <li><strong>B)</strong> Errada — explicação.</li>
+                                        <li><strong>C)</strong> Correta — explicação.</li>
+                                        <li><strong>D)</strong> Errada — explicação.</li>
+                                        <li><strong>E)</strong> Errada — explicação.</li>
+                                    </ul>
+                                </details>
+                            </div>
+
+                        </div><!-- /content -->
+                    </td>
+                </tr>
+            </tbody>
+
+            <!-- RODAPÉ REPETIDO EM CADA PÁGINA NO PRINT -->
+            <!-- ✏️ ALTERE O TEXTO APÓS O TRAVESSÃO -->
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="print-footer">
+                            Prof. Wilsinho Tavares — Nome da Aula
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <footer>&copy; Professor Wilsinho Tavares</footer>
+
+    </div><!-- /container -->
+</body>
+
+</html>

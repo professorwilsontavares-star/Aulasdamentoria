@@ -1,0 +1,1024 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Lei Complementar 24/1975, Convênios ICMS no âmbito do CONFAZ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../estilo.css">
+    <style>
+        /* =====================================================
+           ESTILOS EXCLUSIVOS DA LC 24/1975
+           (complementam o estilo.css externo)
+        ===================================================== */
+
+        /* CABEÇALHO DE TABELA COM GRADIENTE */
+        .tabela-exc tr:first-child td {
+            background: linear-gradient(90deg, #2C3E50, #2C3E50);
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* COLUNAS EXTRAS NÃO PRESENTES NO ESTILO.CSS */
+        .tabela-exc .col-50 {
+            width: 50%;
+        }
+
+        .tabela-exc .col-60 {
+            width: 60%;
+        }
+
+        /* CARD PREMIUM: compatibilidade com <h3> */
+        .card-header-premium h3 {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .card-header-premium h3 span {
+            color: var(--text-amarelo);
+        }
+
+        /* FLUXOGRAMA CONVÊNIO (fundo escuro) */
+        .fluxo-convenio {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 14px 0 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 16px;
+            background: linear-gradient(90deg, #131B24, #2C3E50);
+            border-radius: 10px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .fluxo-convenio .fluxo-node {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.4;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #fff;
+        }
+
+        .fluxo-convenio .fluxo-node small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 2px;
+        }
+
+        .fluxo-convenio .fluxo-node.inicio {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .fluxo-convenio .fluxo-node.meio {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .fluxo-convenio .fluxo-node.final {
+            background: var(--success);
+            border-color: var(--success);
+            font-weight: 700;
+        }
+
+        .fluxo-convenio .fluxo-seta {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 700;
+            flex-shrink: 0;
+            padding: 0 2px;
+        }
+
+        .fluxo-prazo {
+            text-align: center;
+            padding: 0 6px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.2;
+        }
+
+        .fluxo-prazo strong {
+            display: block;
+            font-size: 1.15rem;
+            color: #fff;
+        }
+
+        @media print {
+            .fluxo-convenio {
+                background: linear-gradient(90deg, #131B24, #2C3E50) !important;
+            }
+
+            .fluxo-convenio .fluxo-node.inicio {
+                background: var(--accent) !important;
+            }
+
+            .fluxo-convenio .fluxo-node.final {
+                background: var(--success) !important;
+            }
+
+            .tabela-exc tr:first-child td {
+                background: linear-gradient(90deg, #131B24, #2C3E50) !important;
+                color: #fff !important;
+            }
+        }
+
+        /* FIM DOS ESTILOS EXCLUSIVOS */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header-top">
+            <div class="prof-name">Prof. Wilsinho Tavares</div>
+            <div class="prof-name">Convênio CONFAZ</div>
+        </div>
+
+        <div class="header-logo">
+        </div>
+
+        <div class="header-main">
+            <h1>Lei Complementar 24/1975</h1>
+            <p class="subtitle">Convênios para Concessão e Revogação de Benefícios Fiscais do ICMS</p>
+        </div>
+
+        <div class="content">
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 1 -->
+            <!-- ============================================ -->
+            <div class="section-title">Objeto e Alcance Normativo da Lei Complementar 24/1975</div>
+
+
+
+            <p>A <strong class="azul">Lei Complementar 24, de 7 de janeiro de 1975</strong>, constitui o diploma
+                normativo que regulamenta a celebração dos convênios destinados à concessão e à revogação de isenções e
+                demais benefícios fiscais relativos ao Imposto sobre Operações Relativas à Circulação de Mercadorias
+                (ICMS). O referido diploma fixa as diretrizes procedimentais e os requisitos de validade para a
+                instituição, alteração e supressão de incentivos fiscais, operando como instrumento de harmonização
+                federativa em matéria tributária e de contenção da denominada guerra fiscal entre as Unidades da
+                Federação.</p>
+
+            <p>O <strong>artigo 1º</strong> do referido diploma normativo estabelece a exigência de convênio
+                interestadual como condição imprescindível para a concessão ou revogação de benefícios fiscais
+                vinculados ao ICMS, determinando que tais atos somente produzirão efeitos jurídicos válidos quando
+                celebrados e ratificados pelos Estados e pelo Distrito Federal, nos termos disciplinados pela própria
+                lei complementar.</p>
+            <figure class="img-container">
+                <img src="IMAGEM001.png" alt="Ilustração da Seção 1">
+            </figure>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 1º.</strong> As isenções do imposto sobre operações relativas à circulação
+                    de mercadorias serão concedidas ou revogadas nos termos de convênios celebrados e ratificados pelos
+                    Estados e pelo Distrito Federal, segundo esta Lei.</p>
+                <p><strong>Parágrafo único.</strong> O disposto neste artigo também se aplica:</p>
+                <p><strong class="inciso">I</strong> à redução da base de cálculo;</p>
+                <p><strong class="inciso">II</strong> à devolução total ou parcial, direta ou indireta, condicionada ou
+                    não, do
+                    tributo, ao contribuinte, a responsável ou a terceiros;</p>
+                <p><strong class="inciso">III</strong> à concessão de créditos presumidos;</p>
+                <p><strong class="inciso">IV</strong> a quaisquer outros incentivos ou favores fiscais ou financeiro,
+                    fiscais,
+                    concedidos com base no Imposto de Circulação de Mercadorias, dos quais resulte redução ou
+                    eliminação, direta ou indireta, do respectivo ônus;</p>
+                <p><strong class="inciso">V</strong> às prorrogações e às extensões das isenções vigentes nesta data.
+                </p>
+            </div>
+
+            <p>A exigência de convênio, portanto, não se restringe à hipótese estrita de concessão de isenção. O
+                parágrafo único do <strong>art. 1º</strong> amplia substancialmente o rol de hipóteses submetidas ao
+                regime de deliberação colegiada, alcançando a <strong class="laranja">redução da base de
+                    cálculo</strong>, a <strong class="laranja">devolução total ou parcial do tributo</strong> ao
+                contribuinte, responsável ou terceiros, a <strong class="laranja">concessão de créditos
+                    presumidos</strong>, quaisquer outros incentivos ou favores fiscais ou financeiro-fiscais que
+                resultem em redução ou eliminação direta ou indireta do ônus tributário, bem como as prorrogações e
+                extensões das isenções vigentes à data da edição do diploma.</p>
+
+            <p>Esse regime decorre de imposição constitucional expressa. A <strong class="azul">Constituição da
+                    República, no art. 155, § 2º, XII, alínea "g"</strong>, atribui à lei complementar a tarefa de
+                regular a forma pela qual, mediante deliberação dos Estados e do Distrito Federal, serão concedidas e
+                revogadas as isenções, incentivos e benefícios fiscais relativos ao ICMS, competência que foi
+                integralmente exercida pela LC 24/1975, recepcionada pela ordem constitucional vigente.</p>
+
+            <div class="atencao">
+                <span class="atencao-label">Atenção, Técnica de Memorização</span>
+                <p>Toda vez que qualquer legislação apresentar enumerações (I, II, III, ou alíneas a, b, c), o candidato
+                    deve memorizar cuidadosamente as situações enumeradas. Tais dispositivos constituem
+                    <strong>matéria-prima de primeira linha para a formulação de questões de múltipla escolha</strong>,
+                    sobretudo em bancas que priorizam o conhecimento literal da norma.
+                </p>
+            </div>
+
+            <div class="premium-card">
+                <div class="card-header-premium">
+                    <h3>Situações que <span>exigem convênio</span> (art. 1º, parágrafo único)</h3>
+                </div>
+                <table class="premium-table">
+                    <tr>
+                        <td class="col-index-premium">I</td>
+                        <td><strong>Redução da base de cálculo</strong> do ICMS.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">II</td>
+                        <td><strong>Devolução total ou parcial</strong>, direta ou indireta, condicionada ou não, do
+                            tributo ao contribuinte, responsável ou terceiros.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">III</td>
+                        <td>Concessão de <strong>créditos presumidos</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">IV</td>
+                        <td><strong>Quaisquer outros incentivos ou favores fiscais ou financeiro-fiscais</strong>
+                            concedidos com base no ICMS, dos quais resulte redução ou eliminação, direta ou indireta, do
+                            respectivo ônus.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">V</td>
+                        <td><strong>Prorrogações e extensões</strong> das isenções vigentes à data da lei.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 2 -->
+            <!-- ============================================ -->
+            <div class="section-title">Requisitos de Validade das Reuniões do CONFAZ</div>
+
+
+
+            <p>As reuniões destinadas à celebração de convênios no âmbito do Conselho Nacional de Política Fazendária
+                (CONFAZ) submetem-se a requisitos formais de convocação e presença, cuja observância é condição
+                necessária para a validade do ato deliberativo. Três são os pressupostos impostos pela norma para a
+                regular instalação e funcionamento da sessão deliberativa.</p>
+
+            <p>O primeiro requisito consiste na <strong class="verde">convocação de representantes de todos os Estados e
+                    do Distrito Federal</strong>, sem o que a deliberação não poderá ser reputada legítima. Trata-se de
+                exigência que assegura a participação institucional de todas as Unidades da Federação no processo
+                decisório.</p>
+
+            <p>O segundo requisito refere-se à <strong class="verde">presidência da reunião</strong>, que será
+                necessariamente exercida por <strong>representante do Governo Federal</strong>, o que confere ao órgão
+                sua natureza híbrida, com representatividade estadual e direção executiva federal.</p>
+
+            <p>O terceiro requisito impõe a <strong class="verde">presença de representantes da maioria das Unidades da
+                    Federação</strong> como quórum mínimo de instalação, de modo que a ausência desse contingente
+                inviabiliza a realização da sessão.</p>
+
+            <div class="premium-card">
+                <div class="card-header-premium">
+                    <h3>Requisitos para realização da <span>reunião do CONFAZ</span></h3>
+                </div>
+                <table class="premium-table">
+                    <tr>
+                        <td class="col-index-premium">I</td>
+                        <td><strong>Convocação</strong> de representantes de todos os Estados e do Distrito Federal.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">II</td>
+                        <td><strong>Presidência</strong> da reunião exercida por representante do Governo Federal.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">III</td>
+                        <td>Presença de representantes da <strong>maioria das Unidades da Federação</strong> (quórum de
+                            instalação).</td>
+                    </tr>
+                </table>
+                <figure class="img-container">
+                    <img src="IMAGEM002.png" alt="Ilustração da Seção 2">
+                </figure>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 3 -->
+            <!-- ============================================ -->
+            <div class="section-title">Quóruns de Aprovação, Concessão e Revogação de Benefícios</div>
+
+
+
+            <p>Nas reuniões do CONFAZ são discutidas, principalmente, as propostas de <strong>concessão</strong> ou
+                <strong>revogação</strong> de benefícios fiscais. Os representantes dos Estados e do Distrito Federal
+                manifestam-se mediante voto pela aprovação ou rejeição das propostas apresentadas, sendo necessária a
+                observância de quóruns diferenciados conforme a natureza do ato deliberativo.
+            </p>
+
+            <p>Para a <strong class="verde">concessão de benefícios fiscais</strong>, exige-se decisão <strong
+                    class="verde">unânime</strong> dos Estados representados. A razão de ser dessa exigência reside na
+                proteção do pacto federativo e na contenção da guerra fiscal, uma vez que benefícios fiscais unilaterais
+                produzem efeitos econômicos sobre todas as Unidades da Federação, justificando a necessidade de consenso
+                absoluto.</p>
+
+            <p>Para a <strong class="c4">revogação total ou parcial</strong> de benefício fiscal anteriormente
+                concedido, exige-se quórum de <strong class="c4">quatro quintos (4/5)</strong>, no mínimo, dos
+                representantes presentes. A diferença de rigor entre os dois quóruns reflete a lógica do regime: para
+                conferir benefício, todas as Unidades devem estar de acordo; para retirar benefício já existente, basta
+                maioria qualificada.</p>
+
+            <div class="tabela-exc">
+                <tr>
+                    <td class="col-50">Natureza da deliberação</td>
+                    <td class="col-50">Quórum exigido</td>
+                </tr>
+                <tr>
+                    <td><strong>Concessão</strong> de benefício fiscal</td>
+                    <td>Decisão <strong class="verde">unânime</strong> dos Estados representados</td>
+                </tr>
+                <tr>
+                    <td><strong>Revogação</strong> total ou parcial de benefício</td>
+                    <td><strong class="c4">4/5 (quatro quintos)</strong>, no mínimo, dos representantes presentes</td>
+                </tr>
+            </div>
+
+            <div class="alerta">
+                <span class="alerta-label">Lembrete, Guerra Fiscal</span>
+                <p>Para dar benefício, todo mundo de acordo. A exigência de unanimidade para concessão é mecanismo
+                    constitucionalmente orientado a impedir a concorrência predatória entre os entes federados mediante
+                    concessão unilateral de incentivos fiscais.</p>
+            </div>
+
+            <p>Os convênios podem dispor que qualquer cláusula se aplique a uma ou algumas Unidades da Federação,
+                possibilidade expressamente admitida pelo regime legal. Tal faculdade confere plasticidade ao instituto
+                e permite que determinados benefícios sejam modulados territorialmente, adequando-se a peculiaridades
+                regionais, sem que se perca a chancela deliberativa do colegiado.</p>
+            <figure class="img-container">
+                <img src="IMAGEM003.png" alt="Ilustração da Seção 3">
+            </figure>
+            <!-- ============================================ -->
+            <!-- SEÇÃO 4 -->
+            <!-- ============================================ -->
+            <div class="section-title">Rito de Aprovação, Publicação e Vigência dos Convênios</div>
+
+
+
+            <p>Para a efetivação dos convênios celebrados no âmbito do CONFAZ, a lei estabelece um <strong>rito
+                    procedimental sequencial</strong>, composto por etapas temporalmente encadeadas, cuja observância é
+                condição de validade e eficácia do ato. O descumprimento de qualquer uma das fases compromete a
+                regularidade da concessão ou revogação do benefício fiscal.</p>
+            <figure class="img-container">
+                <img src="IMAGEM005.png" alt="Ilustração da Seção 5">
+            </figure>
+
+            <p>A primeira etapa consiste na <strong class="azul">publicação da resolução adotada na reunião</strong> no
+                Diário Oficial da União, dentro do prazo de <strong>10 dias</strong> contados da data final da reunião
+                em que o convênio foi firmado. A publicação no veículo oficial da União, e não nos diários estaduais,
+                marca o caráter nacional do ato e a necessidade de ampla divulgação institucional.</p>
+
+            <p>Após essa publicação, o <strong class="azul">Poder Executivo de cada Unidade da Federação</strong> dispõe
+                de <strong>15 dias</strong> para publicar decreto ratificando ou não os convênios celebrados. A ausência
+                de manifestação nesse prazo implica <strong class="laranja">ratificação tácita</strong>, consequência
+                jurídica de relevo que transforma a omissão administrativa em adesão presumida ao ato deliberativo. Tais
+                regras aplicam-se inclusive às Unidades da Federação cujos representantes não tenham comparecido à
+                reunião em que os convênios foram celebrados.</p>
+
+            <p>A <strong class="c4">não ratificação</strong> pelo Poder Executivo de todas as Unidades da Federação, no
+                caso de concessão de benefício, ou de, no mínimo, <strong class="c4">quatro quintos</strong> das
+                Unidades da Federação, no caso de revogação total ou parcial, implica <strong>rejeição do convênio
+                    firmado</strong>. Ou seja, basta que uma única UF deixe de ratificar para que o convênio de
+                concessão seja rejeitado, evidenciando o rigor da unanimidade exigida.</p>
+
+            <p>Até <strong>10 dias depois de findo o prazo de ratificação</strong>, deve ser publicada no Diário Oficial
+                da União informação relativa à ratificação ou à rejeição do convênio. Trata-se de ato
+                administrativo-formal que declara o resultado do processo deliberativo e antecede a entrada em vigor.
+            </p>
+
+            <p>Por fim, os convênios <strong class="verde">entrarão em vigor no trigésimo dia</strong> após tal
+                publicação, salvo disposição em contrário, vinculando, a partir daí, todas as Unidades da Federação,
+                inclusive aquelas que, regularmente convocadas, não se tenham feito representar na reunião em que o ato
+                foi celebrado.</p>
+
+            <div class="fluxo-convenio">
+                <div class="fluxo-node inicio">Reunião<small>CONFAZ</small></div>
+                <div class="fluxo-prazo"><strong>10</strong>dias</div>
+                <div class="fluxo-seta">→</div>
+                <div class="fluxo-node">Resolução<small>Publicada no D.O.U.</small></div>
+                <div class="fluxo-prazo"><strong>15</strong>dias</div>
+                <div class="fluxo-seta">→</div>
+                <div class="fluxo-node meio">Decretos<small>Estaduais (ratificação)</small></div>
+                <div class="fluxo-prazo"><strong>10</strong>dias</div>
+                <div class="fluxo-seta">→</div>
+                <div class="fluxo-node">Publicação<small>Ratificação / Rejeição</small></div>
+                <div class="fluxo-prazo"><strong>30</strong>dias</div>
+                <div class="fluxo-seta">→</div>
+                <div class="fluxo-node final">Convênio<small>em vigor</small></div>
+            </div>
+
+            <ol class="lista-num">
+                <li>Realização da reunião, atendidos os requisitos de convocação, presidência e quórum.
+                </li>
+                <li>Em até 10 dias após o encerramento da reunião, publicação da resolução no Diário Oficial da União.
+                </li>
+                <li>Nos 15 dias subsequentes, cada UF publica decreto ratificando ou rejeitando o convênio; a omissão
+                    equivale a ratificação tácita.</li>
+                <li>Até 10 dias após o prazo de ratificação, publicação da informação de ratificação ou rejeição no
+                    D.O.U.</li>
+                <li>30 dias depois dessa publicação, o convênio entra em vigor, salvo disposição em contrário.</li>
+            </ol>
+
+            <div class="alerta">
+                <span class="alerta-label">Vinculação universal</span>
+                <p>Os convênios aplicam-se também às Unidades da Federação que não compareceram às reuniões, desde que
+                    regularmente convocadas. Fique esperto com isso. Os prazos (10, 15, 10 e 30 dias) costumam ser
+                    objeto de cobrança direta em prova.</p>
+            </div>
+            <figure class="img-container">
+                <img src="IMAGEM004.png" alt="Ilustração da Seção 4">
+            </figure>
+            <!-- ============================================ -->
+            <!-- SEÇÃO 5 -->
+            <!-- ============================================ -->
+            <div class="section-title">Sanções pela Inobservância da Lei Complementar 24/1975</div>
+
+
+
+            <p>A inobservância das disposições da LC 24/1975 acarreta consequências jurídicas de natureza cumulativa,
+                expressamente previstas em lei, com o objetivo de assegurar a efetividade do regime de deliberação
+                colegiada e coibir a concessão unilateral de benefícios fiscais.</p>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 7º.</strong> Os convênios ratificados obrigam todas as Unidades da Federação
+                    inclusive as que, regularmente convocadas, não se tenham feito representar na reunião.</p>
+                <p><strong>Art. 8º.</strong> A inobservância dos dispositivos desta Lei acarretará, cumulativamente:</p>
+                <p><strong class="inciso">I</strong> a nulidade do ato e a ineficácia do crédito fiscal atribuído ao
+                    estabelecimento
+                    recebedor da mercadoria;</p>
+                <p><strong class="inciso">II</strong> a exigibilidade do imposto não pago ou devolvido e a ineficácia da
+                    lei ou ato
+                    que conceda remissão do débito correspondente.</p>
+                <p><strong>Art. 9º.</strong> É vedado aos Municípios, sob pena das sanções previstas no artigo anterior,
+                    concederem qualquer dos benefícios relacionados no art. 1º no que se refere à sua parcela na receita
+                    do imposto de circulação de mercadorias.</p>
+            </div>
+
+            <p>O <strong>art. 8º</strong> prevê duas consequências cumulativas para a inobservância dos dispositivos
+                legais. A primeira é a <strong class="c4">nulidade do ato</strong> e a <strong class="c4">ineficácia do
+                    crédito fiscal</strong> atribuído ao estabelecimento recebedor da mercadoria. A segunda é a <strong
+                    class="c4">exigibilidade do imposto não pago ou devolvido</strong> e a <strong class="c4">ineficácia
+                    da lei ou ato que conceda remissão do débito correspondente</strong>.</p>
+
+            <p>A consequência prática mais impactante dessa disciplina consiste no fato de que o próprio Estado que
+                concedeu o benefício sem observância do rito legal passa a ser obrigado a <strong>exigir o
+                    imposto</strong>, pois a concessão unilateral desconsidera o pacto federativo tributário e constitui
+                elemento deflagrador da guerra fiscal, conduta que a lei busca expressamente reprimir.</p>
+
+            <p>O <strong>art. 9º</strong> veda aos <strong class="laranja">Municípios</strong> a concessão de quaisquer
+                dos benefícios relacionados no <strong>art. 1º</strong> no que se refere à sua parcela na receita do
+                ICMS. Embora os Municípios recebam parcela constitucionalmente assegurada do imposto arrecadado pelos
+                Estados, essa circunstância não lhes autoriza a conceder, por ato próprio, benefícios fiscais vinculados
+                ao tributo. A vedação é integral e submete-se às mesmas sanções do <strong>art. 8º</strong>.</p>
+
+            <div class="premium-card">
+                <div class="card-header-premium">
+                    <h3>Consequências da <span>inobservância</span> (art. 8º)</h3>
+                </div>
+                <table class="premium-table">
+                    <tr>
+                        <td class="col-index-premium">I</td>
+                        <td><strong>Nulidade do ato</strong> e <strong class="c4">ineficácia do crédito fiscal</strong>
+                            atribuído ao estabelecimento recebedor da mercadoria.</td>
+                    </tr>
+                    <tr>
+                        <td class="col-index-premium">II</td>
+                        <td><strong>Exigibilidade do imposto</strong> não pago ou devolvido e <strong
+                                class="c4">ineficácia da lei ou ato</strong> que conceda remissão do débito
+                            correspondente.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 6 -->
+            <!-- ============================================ -->
+            <div class="section-title">Anistia, Remissão, Transação, Moratória, Parcelamento e Prazo de Recolhimento
+            </div>
+
+
+
+            <p>O <strong>art. 10</strong> da LC 24/1975 dispõe que os convênios definirão as condições gerais em que
+                cada ente poderá conceder <strong>anistia</strong>, <strong>remissão</strong>,
+                <strong>transação</strong>, <strong>moratória</strong>, <strong>parcelamento de débitos fiscais</strong>
+                e <strong>ampliação do prazo de recolhimento</strong> do ICMS. A norma estende o regime de deliberação
+                colegiada a esses institutos, submetendo-os ao mesmo crivo de harmonização federativa aplicável aos
+                benefícios do <strong>art. 1º</strong>.
+            </p>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 10.</strong> Os convênios definirão as condições gerais em que se poderão
+                    conceder, unilateralmente, anistia, remissão, transação, moratória, parcelamento de débitos fiscais
+                    e ampliação do prazo de recolhimento do imposto de circulação de mercadorias.</p>
+            </div>
+
+            <p>A teleologia do dispositivo é a de impedir que, por vias oblíquas (anistia, remissão, transação ou
+                concessão de prazos dilatados), os Estados e o Distrito Federal acabem reduzindo ou eliminando, na
+                prática, o ônus tributário do ICMS sem a chancela do CONFAZ. O regime de deliberação colegiada,
+                portanto, não se limita aos benefícios diretos, mas alcança também os institutos que produzem efeitos
+                econômicos equivalentes.</p>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 7 -->
+            <!-- ============================================ -->
+            <div class="section-title">Suspensão do ICMS nas Operações com Cooperativas de Produtores</div>
+
+            <p>O <strong>art. 14</strong> da LC 24/1975 estabelece hipóteses de <strong>suspensão do ICMS</strong>
+                aplicáveis a operações específicas envolvendo cooperativas de produtores, que não se confundem com
+                isenção. Trata-se de técnica pela qual o fato gerador ocorre, mas a exigibilidade do tributo é
+                postergada para momento posterior, em que se dará a saída subsequente da mercadoria.</p>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 14.</strong> Sairão com suspensão do Imposto de Circulação de Mercadorias:
+                </p>
+                <p><strong class="inciso">I</strong> as mercadorias remetidas pelo estabelecimento do produtor para
+                    estabelecimento de
+                    Cooperativa de que faça parte, situada no mesmo Estado;</p>
+                <p><strong class="inciso">II</strong> as mercadorias remetidas pelo estabelecimento de Cooperativa de
+                    Produtores, para
+                    estabelecimento, no mesmo Estado, da própria Cooperativa, de Cooperativa Central ou de Federação de
+                    Cooperativas de que a Cooperativa remetente faça parte.</p>
+                <p><strong>§ 1º.</strong> O imposto devido pelas saídas mencionadas nos incisos I e II será recolhido
+                    pelo destinatário quando da saída subseqüente, esteja esta sujeita ou não ao pagamento do tributo.
+                </p>
+            </div>
+
+            <p>O <strong>inciso I</strong> alcança as mercadorias remetidas pelo estabelecimento do produtor para
+                estabelecimento de cooperativa da qual ele faça parte, desde que situado no mesmo Estado. A circulação,
+                em tal hipótese, ocorre sob o regime de suspensão, o que significa que o ICMS não é cobrado no momento
+                da remessa, mas será recolhido pelo destinatário quando ocorrer a <strong class="azul">saída
+                    subsequente</strong> das mercadorias, independentemente de essa saída posterior estar ou não sujeita
+                ao pagamento do tributo.</p>
+
+            <p>O <strong>inciso II</strong> abrange as mercadorias remetidas pelo estabelecimento de cooperativa de
+                produtores para estabelecimento situado no mesmo Estado, que pode ser a própria cooperativa, uma
+                <strong>Cooperativa Central</strong> ou uma <strong>Federação de Cooperativas</strong> da qual a
+                cooperativa remetente faça parte. Tal como no inciso anterior, o imposto será recolhido pelo
+                destinatário quando da saída subsequente.
+            </p>
+
+            <p>A finalidade da disciplina é <strong class="verde">facilitar a atividade econômica</strong> dos
+                produtores rurais e das cooperativas, suspendendo temporariamente a cobrança do ICMS no momento da
+                remessa e transferindo a responsabilidade do pagamento para o destinatário na saída seguinte das
+                mercadorias. Com isso, evita-se a imobilização de capital em tributos devidos em operações
+                intermediárias da cadeia produtiva cooperativista, preservando o fluxo econômico entre produtor,
+                cooperativa e cooperativas centrais ou federações.</p>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 8 -->
+            <!-- ============================================ -->
+            <div class="section-title">Zona Franca de Manaus, Inaplicabilidade da LC 24/1975</div>
+
+            <p>O <strong>art. 15</strong> da LC 24/1975 consagra regime excepcional em favor da <strong
+                    class="azul">Zona Franca de Manaus</strong>, afastando a aplicação do diploma legal às indústrias
+                ali instaladas ou que vierem a se instalar, bem como vedando às demais Unidades da Federação determinar
+                a exclusão de incentivo fiscal, prêmio ou estímulo concedido pelo Estado do Amazonas.</p>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 15.</strong> O disposto nesta Lei não se aplica às indústrias instaladas ou
+                    que vierem a instalar-se na Zona Franca de Manaus, sendo vedado às demais Unidades da Federação
+                    determinar a exclusão de incentivo fiscal, prêmio ou estimulo concedido pelo Estado do Amazonas.</p>
+            </div>
+
+            <p>O dispositivo confere à Zona Franca de Manaus tratamento diferenciado decorrente do modelo de
+                desenvolvimento regional instituído pelo legislador, com fundamento na promoção da industrialização e do
+                desenvolvimento econômico da Amazônia Ocidental. Embora existam embates judiciais sobre a recepção ou
+                não do artigo pela ordem constitucional vigente, é importante que o candidato leve essa informação para
+                sua prova, uma vez que a literalidade do artigo permanece como referência normativa frequentemente
+                cobrada em certames.</p>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 9 -->
+            <!-- ============================================ -->
+            <div class="section-title">Regime de Transição, Benefícios Anteriores a 1974</div>
+
+            <p>O <strong>art. 12</strong> da LC 24/1975 disciplina o regime de transição aplicável aos benefícios
+                fiscais anteriores à edição da própria lei, preservando, como regra, os benefícios decorrentes de
+                convênios regionais e nacionais vigentes à sua data, até que sejam revogados ou alterados por convênio
+                posterior celebrado nos termos do novo regime.</p>
+
+            <div class="dispositivo">
+                <p><strong>LC 24/1975, Art. 12.</strong> São mantidos os benefícios fiscais decorrentes de convênios
+                    regionais e nacionais vigentes à data desta Lei, até que revogados ou alterados por outro.</p>
+                <p><strong>§ 1º.</strong> Continuam em vigor os benefícios fiscais ressalvados pelo § 6º do art. 3º do
+                    Decreto-Lei nº 406, de 31 de dezembro de 1968, com a redação que lhe deu o art. 5º do Decreto-Lei nº
+                    834, de 8 de setembro de 1969, até o vencimento do prazo ou cumprimento das condições
+                    correspondentes.</p>
+                <p><strong>§ 2º.</strong> Quaisquer outros benefícios fiscais concedidos pela legislação estadual
+                    considerar-se-ão revogados se não forem convalidados pelo primeiro convênio que se realizar na forma
+                    desta Lei, ressalvados os concedidos por prazo certo ou em função de determinadas condições que já
+                    tenham sido incorporadas ao patrimônio jurídico de contribuinte. O prazo para a celebração deste
+                    convênio será de 90 (noventa) dias a contar da data da publicação desta Lei.</p>
+                <p><strong>§ 3º.</strong> A convalidação de que trata o parágrafo anterior se fará pela aprovação de 2/3
+                    (dois terços) dos representantes presentes, observando-se, na respectiva ratificação, este quorum e
+                    o mesmo processo do disposto no art. 4º.</p>
+            </div>
+
+            <p>O <strong>§ 1º</strong> preserva os benefícios fiscais ressalvados pelo § 6º do art. 3º do Decreto-Lei
+                406/1968, com a redação do Decreto-Lei 834/1969, até o vencimento do prazo ou o cumprimento das
+                condições correspondentes. Trata-se de regra de respeito a situações jurídicas já consolidadas sob a
+                égide da legislação anterior.</p>
+
+            <p>O <strong>§ 2º</strong> estabelece consequência relevante: <strong class="c4">quaisquer outros benefícios
+                    fiscais concedidos pela legislação estadual considerar-se-ão revogados</strong> se não forem
+                convalidados pelo primeiro convênio realizado na forma da lei, ressalvados os concedidos por prazo certo
+                ou em função de condições incorporadas ao patrimônio jurídico do contribuinte. O prazo para celebração
+                desse convênio foi fixado em 90 dias a contar da publicação da lei.</p>
+
+            <p>O <strong>§ 3º</strong>, por sua vez, estabelece quórum especial e diferenciado para a convalidação:
+                aprovação de <strong>2/3 (dois terços)</strong> dos representantes presentes, observando-se, na
+                respectiva ratificação, o mesmo quórum e o processo disposto no art. 4º. Note-se que se trata de exceção
+                ao regime geral de unanimidade para concessão, justificada pelo caráter excepcional e transitório da
+                convalidação.</p>
+
+            <div class="tabela-exc">
+                <tr>
+                    <td class="col-50">Situação</td>
+                    <td class="col-50">Tratamento</td>
+                </tr>
+                <tr>
+                    <td>Benefícios de convênios regionais e nacionais vigentes em 1975</td>
+                    <td><strong>Mantidos</strong> até revogação ou alteração por novo convênio</td>
+                </tr>
+                <tr>
+                    <td>Benefícios ressalvados pelo DL 406/1968 (redação DL 834/1969)</td>
+                    <td><strong>Mantidos</strong> até vencimento do prazo ou cumprimento das condições</td>
+                </tr>
+                <tr>
+                    <td>Outros benefícios estaduais não convalidados em 90 dias</td>
+                    <td><strong class="c4">Revogados</strong>, salvo prazo certo ou condição incorporada ao patrimônio
+                        do contribuinte</td>
+                </tr>
+                <tr>
+                    <td>Quórum de convalidação</td>
+                    <td><strong class="verde">2/3</strong> dos representantes presentes (exceção à unanimidade)</td>
+                </tr>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 10 -->
+            <!-- ============================================ -->
+            <div class="section-title">Síntese</div>
+
+            <p>Para a <strong class="verde">concessão de benefícios fiscais</strong> relativos ao ICMS, a aprovação do
+                convênio dependerá sempre de <strong class="verde">decisão unânime</strong> dos Estados representados.
+                Para a <strong class="c4">revogação total ou parcial</strong>, a aprovação dependerá de, no mínimo,
+                <strong class="c4">quatro quintos</strong> dos representantes presentes.
+            </p>
+
+            <p>A <strong>inobservância dos dispositivos</strong> da LC 24/1975 acarretará, cumulativamente, (i) a
+                nulidade do ato e a ineficácia do crédito fiscal atribuído ao estabelecimento recebedor da mercadoria, e
+                (ii) a exigibilidade do imposto não pago ou devolvido e a ineficácia da lei ou ato que conceda remissão
+                do débito correspondente.</p>
+
+            <p>Os <strong>Municípios</strong> estão <strong class="laranja">impedidos</strong> de conceder qualquer dos
+                benefícios relacionados no art. 1º no que se refere à sua parcela na receita do ICMS, sob pena das
+                sanções do art. 8º.</p>
+
+            <p>A <strong>LC 24/1975 não se aplica às indústrias da Zona Franca de Manaus</strong>, sendo vedado às
+                demais Unidades da Federação determinar a exclusão de incentivo fiscal, prêmio ou estímulo concedido
+                pelo Estado do Amazonas, ressalva essa que, apesar dos embates judiciais sobre sua recepção, deve ser
+                levada à prova em sua literalidade.</p>
+
+            <p>Por fim, para a <strong>realização do convênio</strong>, é imprescindível <br>
+            <ul>(i) convocar todos os Estados e
+                o Distrito Federal; <ul> (ii) se não comparecerem todos, o convênio somente será discutido se comparecer
+                    a
+                    <strong>maioria</strong> dos Estados; <ul> (iii) a <strong class="verde">aprovação</strong> do
+                        convênio
+                        depende da concordância <strong class="verde">unânime</strong> dos presentes; e <ul> (iv) a
+                            <strong class="c4">revogação</strong> depende da concordância de <strong
+                                class="c4">4/5</strong> dos
+                            Estados.
+                            </p>
+
+                            <div class="premium-card">
+                                <div class="card-header-premium">
+                                    <h3>Resumo <span>Operacional</span></h3>
+                                </div>
+                                <table class="premium-table">
+                                    <tr>
+                                        <td class="col-index-premium">I</td>
+                                        <td><strong>Convocação:</strong> todos os Estados e o DF devem ser convocados.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">II</td>
+                                        <td><strong>Instalação:</strong> basta a presença da maioria das UFs.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">III</td>
+                                        <td><strong class="verde">Concessão:</strong> unanimidade dos presentes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">IV</td>
+                                        <td><strong class="c4">Revogação:</strong> 4/5 dos Estados.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">V</td>
+                                        <td><strong>Ratificação:</strong> 15 dias para decreto estadual; silêncio gera
+                                            ratificação
+                                            tácita.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">VI</td>
+                                        <td><strong>Vigência:</strong> 30º dia após publicação da ratificação, salvo
+                                            disposição em
+                                            contrário.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-index-premium">VII</td>
+                                        <td><strong>Vinculação:</strong> todas as UFs, inclusive as ausentes da reunião.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- ============================================ -->
+                            <!-- QUESTÕES DE PROVA -->
+                            <!-- ============================================ -->
+                            <div class="section-title">Como o Tema Será Cobrado em Prova</div>
+
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão 1</span>
+                                <p class="questao-enunciado">Segundo a Lei Complementar 24/1975, o quórum exigido para a
+                                    concessão de
+                                    benefícios fiscais do ICMS e para a sua revogação total ou parcial é,
+                                    respectivamente:</p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> Maioria absoluta e maioria simples dos
+                                        presentes.</li>
+                                    <li><span class="alt-letra">B)</span> Dois terços dos Estados e metade dos
+                                        presentes.</li>
+                                    <li class="alt-correta"><span class="alt-letra">C)</span> Unanimidade dos
+                                        representados e quatro
+                                        quintos dos presentes.</li>
+                                    <li><span class="alt-letra">D)</span> Quatro quintos dos presentes e unanimidade dos
+                                        representados.
+                                    </li>
+                                    <li><span class="alt-letra">E)</span> Maioria qualificada em ambos os casos.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários por alternativa</summary>
+                                    <ul class="comentarios-list">
+                                        <li><span class="comentario-letra">A)</span> Incorreta. Não se trata de maioria
+                                            simples; a
+                                            concessão exige unanimidade e a revogação exige 4/5.</li>
+                                        <li><span class="comentario-letra">B)</span> Incorreta. O quórum de 2/3
+                                            aplica-se apenas à
+                                            convalidação transitória do art. 12, § 3º, não ao regime geral.</li>
+                                        <li><span class="comentario-letra">C)</span> Correta. A concessão depende de
+                                            decisão unânime dos
+                                            Estados representados, e a revogação total ou parcial depende de aprovação
+                                            de, no mínimo,
+                                            4/5 dos representantes presentes.</li>
+                                        <li><span class="comentario-letra">D)</span> Incorreta. Inverte os quóruns:
+                                            unanimidade é para
+                                            concessão, 4/5 é para revogação.</li>
+                                        <li><span class="comentario-letra">E)</span> Incorreta. Não existe o regime de
+                                            "maioria
+                                            qualificada em ambos os casos" previsto na LC 24/1975.</li>
+                                    </ul>
+                                </details>
+                            </div>
+
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão 2</span>
+                                <p class="questao-enunciado">Sobre o rito de celebração e vigência dos convênios ICMS, é
+                                    correto
+                                    afirmar:</p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> A resolução adotada na reunião deve ser
+                                        publicada em até 15
+                                        dias no D.O.U.</li>
+                                    <li><span class="alt-letra">B)</span> A ausência de decreto estadual de ratificação
+                                        implica rejeição
+                                        tácita do convênio.</li>
+                                    <li><span class="alt-letra">C)</span> Os convênios entram em vigor no 15º dia após a
+                                        publicação da
+                                        ratificação.</li>
+                                    <li class="alt-correta"><span class="alt-letra">D)</span> O silêncio do Poder
+                                        Executivo estadual no
+                                        prazo de 15 dias equivale a ratificação tácita, e o convênio entra em vigor no
+                                        30º dia após a
+                                        publicação da ratificação.</li>
+                                    <li><span class="alt-letra">E)</span> O convênio só vincula as UFs que participaram
+                                        da reunião.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários por alternativa</summary>
+                                    <ul class="comentarios-list">
+                                        <li><span class="comentario-letra">A)</span> Incorreta. O prazo para publicação
+                                            da resolução é
+                                            de 10 dias, não 15.</li>
+                                        <li><span class="comentario-letra">B)</span> Incorreta. O silêncio implica
+                                            ratificação tácita,
+                                            não rejeição.</li>
+                                        <li><span class="comentario-letra">C)</span> Incorreta. Os convênios entram em
+                                            vigor no 30º dia,
+                                            salvo disposição em contrário.</li>
+                                        <li><span class="comentario-letra">D)</span> Correta. A LC 24/1975 estabelece
+                                            que o decreto
+                                            estadual deve ser editado em 15 dias; a omissão produz ratificação tácita, e
+                                            a vigência
+                                            inicia-se no 30º dia após a publicação da ratificação no D.O.U.</li>
+                                        <li><span class="comentario-letra">E)</span> Incorreta. Os convênios ratificados
+                                            vinculam todas
+                                            as UFs, inclusive as que, regularmente convocadas, não se fizeram
+                                            representar.</li>
+                                    </ul>
+                                </details>
+                            </div>
+
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão 3</span>
+                                <p class="questao-enunciado">A inobservância dos dispositivos da LC 24/1975 na concessão
+                                    de benefício
+                                    fiscal do ICMS acarreta, cumulativamente:</p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> Apenas a nulidade do ato concessivo.</li>
+                                    <li><span class="alt-letra">B)</span> Apenas a exigibilidade do imposto não pago.
+                                    </li>
+                                    <li class="alt-correta"><span class="alt-letra">C)</span> A nulidade do ato, a
+                                        ineficácia do crédito
+                                        fiscal atribuído ao estabelecimento recebedor, a exigibilidade do imposto não
+                                        pago ou devolvido
+                                        e a ineficácia da lei que conceda remissão do débito.</li>
+                                    <li><span class="alt-letra">D)</span> Apenas a responsabilização funcional do agente
+                                        público
+                                        concedente.</li>
+                                    <li><span class="alt-letra">E)</span> A nulidade do ato, sem repercussão sobre o
+                                        crédito do
+                                        adquirente.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários por alternativa</summary>
+                                    <ul class="comentarios-list">
+                                        <li><span class="comentario-letra">A)</span> Incorreta. As consequências são
+                                            cumulativas, não
+                                            apenas a nulidade.</li>
+                                        <li><span class="comentario-letra">B)</span> Incorreta. A exigibilidade é uma
+                                            das consequências,
+                                            mas não a única.</li>
+                                        <li><span class="comentario-letra">C)</span> Correta. O art. 8º da LC 24/1975
+                                            enumera, de forma
+                                            cumulativa, todas as consequências descritas na alternativa.</li>
+                                        <li><span class="comentario-letra">D)</span> Incorreta. A responsabilização
+                                            funcional não está
+                                            prevista no art. 8º.</li>
+                                        <li><span class="comentario-letra">E)</span> Incorreta. O crédito fiscal do
+                                            estabelecimento
+                                            recebedor é expressamente declarado ineficaz.</li>
+                                    </ul>
+                                </details>
+                            </div>
+
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão 4</span>
+                                <p class="questao-enunciado">Sobre a suspensão do ICMS prevista no art. 14 da LC 24/1975
+                                    nas operações
+                                    com cooperativas de produtores, é correto afirmar:</p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> A suspensão equivale a isenção definitiva do
+                                        imposto.</li>
+                                    <li><span class="alt-letra">B)</span> Alcança operações interestaduais entre
+                                        produtor e cooperativa.
+                                    </li>
+                                    <li class="alt-correta"><span class="alt-letra">C)</span> Aplica-se a operações
+                                        realizadas no mesmo
+                                        Estado; o imposto é recolhido pelo destinatário na saída subsequente, esteja ela
+                                        sujeita ou não
+                                        ao pagamento do tributo.</li>
+                                    <li><span class="alt-letra">D)</span> A responsabilidade pelo recolhimento é do
+                                        remetente produtor.
+                                    </li>
+                                    <li><span class="alt-letra">E)</span> Aplica-se apenas a cooperativas centrais,
+                                        excluídas as
+                                        cooperativas singulares.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários por alternativa</summary>
+                                    <ul class="comentarios-list">
+                                        <li><span class="comentario-letra">A)</span> Incorreta. Suspensão não é isenção:
+                                            o fato gerador
+                                            ocorre, mas a exigibilidade é postergada.</li>
+                                        <li><span class="comentario-letra">B)</span> Incorreta. A lei exige que a
+                                            operação se dê no
+                                            mesmo Estado.</li>
+                                        <li><span class="comentario-letra">C)</span> Correta. O art. 14 alcança
+                                            operações no mesmo
+                                            Estado, entre produtor, cooperativa, cooperativa central ou federação; o
+                                            imposto é recolhido
+                                            pelo destinatário na saída subsequente (art. 14, § 1º).</li>
+                                        <li><span class="comentario-letra">D)</span> Incorreta. A responsabilidade é do
+                                            destinatário, na
+                                            saída subsequente.</li>
+                                        <li><span class="comentario-letra">E)</span> Incorreta. O regime abrange
+                                            cooperativas
+                                            singulares, centrais e federações.</li>
+                                    </ul>
+                                </details>
+                            </div>
+
+                            <div class="questao-prova">
+                                <span class="questao-label">Questão 5</span>
+                                <p class="questao-enunciado">Quanto aos Municípios e à LC 24/1975, é correto afirmar
+                                    que:</p>
+                                <ul class="alternativas">
+                                    <li><span class="alt-letra">A)</span> Podem conceder benefícios fiscais sobre sua
+                                        parcela do ICMS,
+                                        desde que autorizados por lei municipal.</li>
+                                    <li><span class="alt-letra">B)</span> Podem conceder benefícios fiscais mediante
+                                        convênio municipal
+                                        equivalente ao CONFAZ.</li>
+                                    <li class="alt-correta"><span class="alt-letra">C)</span> É vedado aos Municípios
+                                        conceder qualquer
+                                        dos benefícios do art. 1º relativos à sua parcela na receita do ICMS, sob pena
+                                        das sanções do
+                                        art. 8º.</li>
+                                    <li><span class="alt-letra">D)</span> A vedação municipal aplica-se apenas aos
+                                        benefícios de
+                                        isenção, não aos demais.</li>
+                                    <li><span class="alt-letra">E)</span> A vedação municipal depende de ratificação
+                                        estadual para
+                                        produzir efeitos.</li>
+                                </ul>
+                                <details class="comentarios-toggle">
+                                    <summary>Ver comentários por alternativa</summary>
+                                    <ul class="comentarios-list">
+                                        <li><span class="comentario-letra">A)</span> Incorreta. A lei municipal não
+                                            afasta a vedação do
+                                            art. 9º da LC 24/1975.</li>
+                                        <li><span class="comentario-letra">B)</span> Incorreta. Não existe convênio
+                                            municipal
+                                            equivalente ao CONFAZ.</li>
+                                        <li><span class="comentario-letra">C)</span> Correta. O art. 9º veda aos
+                                            Municípios conceder
+                                            quaisquer benefícios do art. 1º relativos à sua parcela do ICMS, sob pena
+                                            das sanções
+                                            cumulativas do art. 8º.</li>
+                                        <li><span class="comentario-letra">D)</span> Incorreta. A vedação alcança todos
+                                            os benefícios do
+                                            art. 1º, não apenas a isenção.</li>
+                                        <li><span class="comentario-letra">E)</span> Incorreta. A vedação é de natureza
+                                            legal e direta,
+                                            não depende de ratificação estadual.</li>
+                                    </ul>
+                                </details>
+                            </div>
+                            <figure class="img-container">
+                                <img src="IMAGEM006.png" alt="Ilustração da Seção 6">
+                            </figure>
+        </div><!-- /content -->
+
+        <footer>
+            <p>Direito Tributário • Convênios CONFAZ • Lei Complementar 24/1975</p>
+        </footer>
+
+    </div><!-- /container -->
+</body>
+
+</html>
+
+<script>
+    /* Abre todos os <details> antes de imprimir e restaura depois */
+    window.addEventListener('beforeprint', function () {
+        document.querySelectorAll('details').forEach(function (d) {
+            d._wasOpen = d.open;
+            d.open = true;
+        });
+    });
+    window.addEventListener('afterprint', function () {
+        document.querySelectorAll('details').forEach(function (d) {
+            d.open = d._wasOpen;
+            delete d._wasOpen;
+        });
+    });
+</script>
+</body>
+
+</html>
