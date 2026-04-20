@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metas Semanais - Modo React</title>
+  <!-- Bibliotecas React e ReactDOM via CDN v18 -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel para compilar JSX direto no navegador -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FAFAFA;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useCallback, useRef, useEffect, useLayoutEffect } = React;
+
+    // ── Supabase client ──
+    const SUPABASE_URL = "https://zrkpbjecswaiafujbzto.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpya3BiamVjc3dhaWFmdWpienRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNTE3ODksImV4cCI6MjA5MTkyNzc4OX0.EQ-Ku8lwgFCJYd-oUG2I-f1tL-y8sFLUOL3V6E4JEhw"; // ← anon key (começa com eyJ...)
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const getTheme = (dark) => ({
+      bg: dark ? "#0F172A" : "#FAFAFA",
+      white: dark ? "#1E293B" : "#FFFFFF",
+      laranjaClaro: dark ? "#2A1A0A" : "#FFE4CC",
+      verde: dark ? "#0A2018" : "#CCE5D6",
+      verdeClarinho: dark ? "#0A1A12" : "#EBF5EF",
+      azulClaro: dark ? "#1A3550" : "#94B9C9",
+      azulClaroVivo: dark ? "#2A6A9A" : "#4EAED9",
+      pretoAzulado: dark ? "#E2E8F0" : "#1E2B38",
+      vermelhoAlaranjado: "#E25E42",
+      cinzaVerdeado: dark ? "#6AAA9D" : "#739E8D",
+      verdeSuave: dark ? "#0A2018" : "#CCE5D6",
+      coral: dark ? "#C07060" : "#FF9481",
+      azulEscuro: dark ? "#93C5FD" : "#26344F",
+      muted: dark ? "#94A3B8" : "#8A8A97",
+      mutedLight: dark ? "#64748B" : "#B5B5C0",
+      border: dark ? "#334155" : "#E8E8EC",
+      borderLight: dark ? "#1E293B" : "#F0F0F3",
+    });
+    const CORES_DISC = ["#3B41C5", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
+    const MPW = 14; // metas por semana (2 por disciplina × 7 disciplinas)
+    const getC = (gi) => CORES_DISC[gi % 5];
+
+    function gerarExtras(semana, respostas, metasBanco) {
+      if (semana < 2) return [];
+      const ai = (semana - 2) * MPW + 1, af = (semana - 1) * MPW;
+      const prev = metasBanco.filter(m => m.ordem_plano >= ai && m.ordem_plano <= af);
+      return respostas.filter(r => { const m = prev.find(mm => mm.id === r.meta_id); return m && r.link_erros; })
+        .map((r, idx) => {
+          const m = metasBanco.find(mm => mm.id === r.meta_id);
+          return { extra_id: `ex-${semana}-${idx}`, disciplina: m.disciplina, assunto: `Revisão: ${m.assunto}`, item_edital: m.item_edital, link_erros: r.link_erros };
+        });
+    }
+    function getMetasSemana(semana, metasBanco) { const i = (semana - 1) * MPW + 1; return metasBanco.filter(m => m.ordem_plano >= i && m.ordem_plano <= i + MPW - 1); }
+    function getEstatisticas(respostas) {
+      const n = respostas.filter(r => !r.is_extra);
+      const tq = n.reduce((s, r) => s + r.qtd_questoes, 0), ta = n.reduce((s, r) => s + r.qtd_acertos, 0);
+      const tt = n.reduce((s, r) => s + (r.tempo_min || 0), 0);
+      const p = tq === 0 ? 0 : (ta / tq) * 100;
+      return { total_questoes: tq, total_acertos: ta, percentual: p, total_tempo: tt, classificacao: p > 81 ? "Excelente" : p >= 75 ? "Ótimo" : "Bom trabalho" };
+    }
+
+    /* ── icons ── */
+    const Check = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>;
+    const ChartIc = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>;
+    const TargetIc = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
+    const ExtIc = () => <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>;
+    const BookIc = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>;
+    const FileIc = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>;
+    const RepeatIc = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="17 1 21 5 17 9" /><path d="M3 11V9a4 4 0 0 1 4-4h14" /><polyline points="7 23 3 19 7 15" /><path d="M21 13v2a4 4 0 0 1-4 4H3" /></svg>;
+    const PlayIc = () => <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>;
+    const PauseIc = () => <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>;
+    const ClockIc = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>;
+    const HistoryIc = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 .49-4.5" /></svg>;
+    const Chevron = ({ open }) => (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+        style={{ transition: "transform .3s ease", transform: open ? "rotate(180deg)" : "rotate(0)" }}>
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    );
+
+    /* ── pill nav ── */
+    const TABS = [
+      { key: "dashboard", label: "Metas", icon: TargetIc },
+      { key: "stats", label: "Estatísticas", icon: ChartIc },
+      { key: "historico", label: "Histórico", icon: HistoryIc },
+    ];
+
+    function PillNav({ view, setView, C, darkMode, setDarkMode }) {
+      const containerRef = useRef(null);
+      const tabRefs = useRef([]);
+      const [ind, setInd] = useState({ left: 0, width: 0 });
+
+      const updateIndicator = useCallback(() => {
+        const idx = TABS.findIndex(t => t.key === view);
+        const el = tabRefs.current[idx];
+        const cont = containerRef.current;
+        if (el && cont) {
+          setInd({ left: el.offsetLeft - cont.offsetLeft, width: el.offsetWidth });
+        }
+      }, [view]);
+
+      useLayoutEffect(() => { updateIndicator(); }, [updateIndicator]);
+      useEffect(() => {
+        window.addEventListener("resize", updateIndicator);
+        return () => window.removeEventListener("resize", updateIndicator);
+      }, [updateIndicator]);
+
+      return (
+        <div className="nav-pill-wrap" style={{
+          position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)",
+          zIndex: 900, animation: "navDrop .6s cubic-bezier(.16,1,.3,1) both",
+        }}>
+          <nav ref={containerRef} style={{
+            position: "relative", display: "inline-flex", gap: 4,
+            padding: 5, borderRadius: 50,
+            background: "rgba(255,255,255,.72)",
+            backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            boxShadow: "0 8px 32px rgba(30,43,56,.10), 0 1.5px 0 rgba(255,255,255,.55) inset",
+            border: "1px solid rgba(232,232,236,.65)",
+          }}>
+            {/* indicator */}
+            <div style={{
+              position: "absolute", top: 5, height: "calc(100% - 10px)",
+              left: ind.left, width: ind.width,
+              borderRadius: 44,
+              background: `linear-gradient(135deg, ${C.cinzaVerdeado}, ${C.verde})`,
+              boxShadow: `0 4px 14px ${C.cinzaVerdeado}40`,
+              transition: "all .4s cubic-bezier(.16,1,.3,1)",
+              zIndex: 0,
+            }} />
+
+            {TABS.map((tab, i) => {
+              const active = view === tab.key;
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.key}
+                  ref={el => tabRefs.current[i] = el}
+                  onClick={() => setView(tab.key)}
+                  className="nav-tab-btn"
+                  style={{
+                    position: "relative", zIndex: 1,
+                    display: "flex", alignItems: "center", gap: 6,
+                    padding: "9px 22px", border: "none", borderRadius: 44,
+                    background: "transparent", cursor: "pointer",
+                    fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: 13,
+                    color: active ? "#fff" : C.muted,
+                    transition: "color .35s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <Icon /><span className="nav-tab-label">{tab.label}</span>
+                </button>
+              );
+            })}
+
+            {/* Dark mode toggle */}
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              title={darkMode ? "Modo claro" : "Modo escuro"}
+              className="nav-theme-btn"
+              style={{
+                position: "relative", zIndex: 1,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                width: 36, height: 36, border: "none", borderRadius: "50%",
+                background: darkMode ? "rgba(255,255,255,.1)" : "rgba(30,43,56,.07)",
+                cursor: "pointer", transition: "background .25s", marginLeft: 2, flexShrink: 0,
+                color: darkMode ? "#FCD34D" : C.muted,
+              }}
+            >
+              {darkMode ? (
+                /* Sun icon */
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                /* Moon icon */
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+          </nav>
+        </div>
+      );
+    }
+
+    function App() {
+      const [respostas, setRespostas] = useState([]);
+      const [extrasDone, setExtrasDone] = useState(new Set());
+      const [extrasOpen, setExtrasOpen] = useState(false);
+      const [view, setView] = useState("dashboard");
+      const [modal, setModal] = useState(null);
+      const [form, setForm] = useState({ qtd_questoes: "", qtd_acertos: "", link_erros: "" });
+      const [formErr, setFormErr] = useState("");
+      const [exp, setExp] = useState(null);
+      const [darkMode, setDarkMode] = useState(false);
+      const [historicoExp, setHistoricoExp] = useState(new Set());
+      const [timerRunning, setTimerRunning] = useState(null);
+      const [tempos, setTempos] = useState({});
+      const [timerStartedAt, setTimerStartedAt] = useState(null);
+      const [now, setNow] = useState(() => Date.now());
+      const [metasBanco, setMetasBanco] = useState([]);
+      const [loadingMetas, setLoadingMetas] = useState(true);
+      const C = getTheme(darkMode);
+
+      // ── Busca dados do Supabase ──
+      useEffect(() => {
+        async function fetchMetas() {
+          setLoadingMetas(true);
+          const { data, error } = await supabase
+            .from("metas")
+            .select("*")
+            .eq("plano", "RFB")
+            .order("ordem_plano", { ascending: true });
+          if (!error && data) setMetasBanco(data);
+          setLoadingMetas(false);
+        }
+        fetchMetas();
+      }, []);
+
+      useEffect(() => {
+        async function fetchRespostas() {
+          const { data } = await supabase
+            .from("respostas")
+            .select("*");
+          if (data) setRespostas(data);
+        }
+        fetchRespostas();
+      }, []);
+
+      useEffect(() => {
+        document.body.style.backgroundColor = C.bg;
+        document.body.style.transition = "background-color .3s";
+      }, [darkMode]);
+
+      useEffect(() => {
+        if (!timerRunning) return;
+        const id = setInterval(() => setNow(Date.now()), 1000);
+        return () => clearInterval(id);
+      }, [timerRunning]);
+
+      const rn = respostas.filter(r => !r.is_extra);
+      const semana = Math.floor(rn.length / MPW) + 1;
+      const feitasSet = new Set(respostas.map(r => r.meta_id));
+      const metasFiltradas = metasBanco.filter(m => !feitasSet.has(m.id));
+      const metas = getMetasSemana(semana, metasFiltradas);
+      const extras = gerarExtras(semana, respostas, metasBanco);
+      const stats = getEstatisticas(respostas);
+      const doneSet = new Set(rn.map(r => r.meta_id));
+      const prog = metas.filter(m => doneSet.has(m.id)).length;
+      const extrasDoneCount = [...extrasDone].filter(id => extras.some(e => e.extra_id === id)).length;
+
+      const fmtTime = (s) => {
+        if (!s || s <= 0) return "00:00";
+        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = Math.floor(s % 60);
+        if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m`;
+        return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+      };
+      const fmtMinutes = (m) => {
+        if (!m || m <= 0) return "—";
+        const h = Math.floor(m / 60), min = Math.round(m % 60);
+        if (h > 0) return `${h}h${min > 0 ? ` ${min}m` : ""}`;
+        return `${min}min`;
+      };
+      const getMetaTempo = useCallback((metaId) => {
+        const base = tempos[metaId] || 0;
+        if (timerRunning === metaId && timerStartedAt) return base + Math.floor((now - timerStartedAt) / 1000);
+        return base;
+      }, [tempos, timerRunning, timerStartedAt, now]);
+      const toggleTimer = useCallback((metaId, e) => {
+        e.stopPropagation();
+        if (timerRunning === metaId) {
+          const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+          setTempos(prev => ({ ...prev, [metaId]: (prev[metaId] || 0) + elapsed }));
+          setTimerRunning(null); setTimerStartedAt(null);
+        } else {
+          if (timerRunning !== null) {
+            const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+            setTempos(prev => ({ ...prev, [timerRunning]: (prev[timerRunning] || 0) + elapsed }));
+          }
+          setTimerRunning(metaId); setTimerStartedAt(Date.now()); setNow(Date.now());
+        }
+      }, [timerRunning, timerStartedAt]);
+
+      const salvar = useCallback(async () => {
+        const qStr = String(form.qtd_questoes).trim();
+        const aStr = String(form.qtd_acertos).trim();
+        let q = qStr === "" ? 0 : parseInt(qStr, 10);
+        let a = aStr === "" ? 0 : parseInt(aStr, 10);
+        const tStr = String(form.tempo_min).trim();
+        let t = tStr === "" ? 0 : parseInt(tStr, 10);
+
+        if (isNaN(q) || q < 0) { setFormErr("Quantidade de questões inválida"); return; }
+        if (isNaN(a) || a < 0 || a > q) { setFormErr("Acertos inválidos (não pode ser maior que o total)"); return; }
+        if (tStr !== "" && (isNaN(t) || !Number.isInteger(t) || t < 9)) { setFormErr("Tempo de estudo deve ser um número inteiro de no mínimo 9 minutos"); return; }
+
+        if (timerRunning === modal.id) {
+          const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+          setTempos(prev => ({ ...prev, [modal.id]: (prev[modal.id] || 0) + elapsed }));
+          setTimerRunning(null); setTimerStartedAt(null);
+        }
+        const { data: userData } = await supabase.auth.getUser();
+        const userId = userData?.user?.id ?? null;
+        const { data, error } = await supabase.from("respostas").insert([
+          {
+            user_id: userId,
+            meta_id: modal.id,
+            qtd_questoes: q,
+            qtd_acertos: a,
+            tempo_min: t,
+            link_erros: form.link_erros || null,
+            is_extra: false
+          }
+        ]).select();
+        if (error) { setFormErr("Erro ao salvar. Tente novamente."); return; }
+        if (data) setRespostas(prev => [...prev, data[0]]);
+        setModal(null); setForm({ qtd_questoes: "", qtd_acertos: "", link_erros: "", tempo_min: "" }); setFormErr("");
+      }, [form, modal, timerRunning, timerStartedAt]);
+
+      const grouped = metas.reduce((a, m) => { if (!a[m.disciplina]) a[m.disciplina] = []; a[m.disciplina].push(m); return a; }, {});
+      const discColorMap = Object.fromEntries(Object.keys(grouped).map((d, i) => [d, i]));
+      const orderMap = Object.fromEntries([...metas].sort((a, b) => a.ordem_plano - b.ordem_plano).map((m, i) => [m.id, i + 1]));
+      const sbd = rn.reduce((a, r) => { const m = metasBanco.find(x => x.id === r.meta_id); if (!m) return a; if (!a[m.disciplina]) a[m.disciplina] = { q: 0, a: 0, t: 0 }; a[m.disciplina].q += r.qtd_questoes; a[m.disciplina].a += r.qtd_acertos; a[m.disciplina].t += (r.tempo_min || 0); return a; }, {});
+      const cardBase = { background: C.white, border: `1px solid ${C.border}`, borderRadius: 12, padding: "13px 15px", marginBottom: 6 };
+
+      if (loadingMetas) {
+        return (
+          <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Inter',system-ui,sans-serif", color: C.muted, flexDirection: "column", gap: 12 }}>
+            <div style={{ width: 36, height: 36, border: `3px solid ${C.border}`, borderTop: `3px solid ${C.cinzaVerdeado}`, borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+            <span style={{ fontSize: 13, fontFamily: "'DM Mono',monospace" }}>Carregando metas...</span>
+            <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{ minHeight: "100vh", background: C.bg, color: C.pretoAzulado, fontFamily: "'Inter',system-ui,sans-serif" }}>
+          <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+        @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+        @keyframes navDrop{from{opacity:0;transform:translateX(-50%) translateY(-24px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        .cm{transition:transform .18s,box-shadow .18s,border-color .18s;cursor:pointer}
+        .cm:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(30,43,56,.08);border-color:${C.azulClaro}!important}
+        .btn{transition:all .18s;cursor:pointer;font-family:'Inter',sans-serif;border:none;border-radius:8px;font-weight:600;font-size:13px}
+        .btn:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(30,43,56,.12)}.btn:active{transform:translateY(0)}
+        .gh{transition:all .18s;cursor:pointer}.gh:hover{background:${C.verdeClarinho}!important;color:${C.cinzaVerdeado}!important}
+        .inf{transition:border-color .2s,box-shadow .2s}
+        .inf:focus{outline:none;border-color:${C.cinzaVerdeado};box-shadow:0 0 0 3px ${C.verdeClarinho}}
+        .lp{transition:all .14s;text-decoration:none}.lp:hover{opacity:.8;transform:translateY(-1px)}
+        .dov{position:relative}.dov::after{content:'';position:absolute;inset:0;background:rgba(250,250,250,.45);border-radius:0;pointer-events:none}
+        .dovc::after{border-radius:12px}
+        .mo{animation:fadeIn .2s}.mb{animation:slideUp .25s}
+        .acct{transition:all .2s;cursor:pointer;user-select:none}.acct:hover{background:#FFD9C2!important}
+        .accb{overflow:hidden;transition:max-height .4s ease,opacity .3s ease}
+        /* ── nav responsiva mobile ── */
+        .nav-pill-wrap{max-width:calc(100vw - 24px);box-sizing:border-box;}
+        .nav-tab-btn{padding:9px 22px;font-size:13px;gap:6px;}
+        .nav-tab-btn .nav-tab-label{display:inline;}
+        @media(max-width:420px){
+          .nav-tab-btn{padding:8px 10px;font-size:11px;gap:3px;}
+          .nav-tab-btn .nav-tab-label{display:none;}
+          .nav-theme-btn{width:32px!important;height:32px!important;margin-left:0!important;}
+        }
+        @media(min-width:421px) and (max-width:520px){
+          .nav-tab-btn{padding:8px 14px;font-size:12px;gap:5px;}
+        }
+      `}</style>
+
+          {/* ── PILL NAV ── */}
+          <PillNav view={view} setView={setView} C={C} darkMode={darkMode} setDarkMode={setDarkMode} />
+
+          {view === "dashboard" && (
+            <div style={{ maxWidth: 720, margin: "0 auto", padding: "76px 18px 80px", animation: "fadeIn .4s" }}>
+              <div style={{ marginBottom: 22 }}>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, letterSpacing: 2.5, color: C.cinzaVerdeado, textTransform: "uppercase", marginBottom: 4 }}>Plano de Estudos</div>
+                <h1 style={{ fontFamily: "'Lora',serif", fontSize: 28, fontWeight: 700, margin: 0, color: C.azulEscuro }}>Semana {semana}</h1>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: C.muted, marginTop: 5 }}>{prog} de {MPW} metas concluídas</div>
+              </div>
+              <div style={{ background: C.verdeClarinho, borderRadius: 8, height: 6, marginBottom: 26, overflow: "hidden" }}>
+                <div style={{ height: "100%", borderRadius: 8, background: `linear-gradient(90deg,${C.cinzaVerdeado},${C.verde})`, width: `${(prog / MPW) * 100}%`, transition: "width .5s" }} />
+              </div>
+
+              {extras.length > 0 && (
+                <div style={{ marginBottom: 24, animation: "fadeUp .4s ease .05s both" }}>
+                  <div className="acct" onClick={() => setExtrasOpen(!extrasOpen)}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: C.laranjaClaro, border: `1px solid ${C.coral}35`, borderRadius: extrasOpen ? "12px 12px 0 0" : 12, padding: "14px 16px", transition: "border-radius .3s ease" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                      <div style={{ color: C.vermelhoAlaranjado }}><RepeatIc /></div>
+                      <span style={{ fontFamily: "'Lora',serif", fontSize: 15, fontWeight: 600, color: C.vermelhoAlaranjado }}>Metas Extras — Revisão de Erros</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, fontWeight: 600, background: extrasDoneCount === extras.length ? C.verdeClarinho : C.white, color: extrasDoneCount === extras.length ? C.cinzaVerdeado : C.vermelhoAlaranjado, padding: "3px 8px", borderRadius: 20, border: `1px solid ${extrasDoneCount === extras.length ? C.cinzaVerdeado + "40" : C.coral + "40"}` }}>
+                        {extrasDoneCount}/{extras.length}
+                      </span>
+                      <div style={{ color: C.vermelhoAlaranjado }}><Chevron open={extrasOpen} /></div>
+                    </div>
+                  </div>
+                  <div className="accb" style={{ maxHeight: extrasOpen ? 2000 : 0, opacity: extrasOpen ? 1 : 0, background: C.laranjaClaro, border: extrasOpen ? `1px solid ${C.coral}35` : `0px solid transparent`, borderTop: "none", borderRadius: "0 0 12px 12px" }}>
+                    {extras.map((ex) => {
+                      const d = extrasDone.has(ex.extra_id);
+                      return (
+                        <div key={ex.extra_id} className={d ? "dov" : ""} style={{ padding: "12px 16px", borderTop: `1px solid ${C.coral}18` }}>
+                          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: getC(discColorMap[ex.disciplina] ?? 0), textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 2 }}>{ex.disciplina}</div>
+                              <div style={{ fontSize: 14, fontWeight: 500, color: d ? C.muted : C.pretoAzulado, textDecoration: d ? "line-through" : "none", lineHeight: 1.35 }}>{ex.assunto}</div>
+                              {ex.item_edital && ex.item_edital.trim() !== "" && (
+                                <div style={{ fontFamily: "'Lora',serif", fontStyle: "italic", fontSize: 11, color: C.muted, marginTop: 2 }}>{ex.item_edital}</div>
+                              )}
+                              {ex.link_erros && ex.link_erros.trim() !== "" && (
+                                <a href={ex.link_erros} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 8, fontSize: 11, color: C.vermelhoAlaranjado, fontFamily: "'DM Mono',monospace", background: C.white, padding: "4px 8px", borderRadius: 6, border: `1px solid ${C.coral}25` }}>
+                                  Caderno de erradas <ExtIc />
+                                </a>
+                              )}
+                            </div>
+                            {d ? (
+                              <div style={{ background: C.verdeClarinho, color: C.cinzaVerdeado, borderRadius: 7, padding: "4px 9px", fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 3, fontFamily: "'DM Mono',monospace", zIndex: 1, flexShrink: 0 }}><Check /> OK</div>
+                            ) : (
+                              <button className="btn" onClick={() => setExtrasDone(p => new Set([...p, ex.extra_id]))} style={{ background: getC(discColorMap[ex.disciplina] ?? 0), color: "#fff", padding: "7px 14px", flexShrink: 0 }}>Revisei</button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {Object.entries(grouped).map(([disc, ms], gi) => {
+                const color = getC(gi);
+                return (
+                  <div key={disc} style={{ marginBottom: 22, animation: `fadeUp .4s ease ${(extras.length > 0 ? .12 : 0) + gi * .04}s both` }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 8, paddingLeft: 2 }}>
+                      <div style={{ width: 4, height: 15, borderRadius: 2, background: color }} />
+                      <span style={{ fontFamily: "'Lora',serif", fontSize: 14, fontWeight: 600, color: color }}>{disc}</span>
+                      <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: C.muted }}>{ms.filter(m => doneSet.has(m.id)).length}/{ms.length}</span>
+                    </div>
+                    {ms.map((meta, mi) => {
+                      const isDone = doneSet.has(meta.id);
+                      const isExp = exp === meta.id;
+                      const mColor = getC(gi);
+                      return (
+                        <div key={meta.id} className={`cm ${isDone ? "dov dovc" : ""}`} onClick={() => setExp(isExp ? null : meta.id)}
+                          style={{ ...cardBase, position: "relative", borderColor: isExp ? mColor : C.border, animation: `fadeUp .3s ease ${gi * .04 + mi * .01}s both` }}>
+                          <div style={{
+                            position: "absolute", top: -9, right: -9,
+                            width: 22, height: 22, borderRadius: "50%",
+                            background: darkMode ? "rgba(100,116,139,.35)" : "#E5E7EB",
+                            color: darkMode ? "#94A3B8" : "#6B7280",
+                            border: `1px solid ${darkMode ? "rgba(148,163,184,.2)" : "#D1D5DB"}`,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: 10, fontWeight: 700, fontFamily: "'DM Mono',monospace",
+                            lineHeight: 1, zIndex: 2, userSelect: "none",
+                          }}>
+                            {orderMap[meta.id]}
+                          </div>
+                          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: mColor, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 2 }}>{disc}</div>
+                              <div style={{ fontSize: 15, fontWeight: 500, color: isDone ? C.muted : C.pretoAzulado, textDecoration: isDone ? "line-through" : "none", lineHeight: 1.35 }}>{meta.assunto}</div>
+                              {meta.item_edital && meta.item_edital.trim() !== "" && (
+                                <div style={{ fontFamily: "'Lora',serif", fontStyle: "italic", fontSize: 11.5, color: C.mutedLight, marginTop: 2, lineHeight: 1.3 }}>{meta.item_edital}</div>
+                              )}
+                            </div>
+                            {isDone ? (
+                              <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0, zIndex: 1 }}>
+                                <div style={{ background: C.verdeClarinho, color: C.cinzaVerdeado, borderRadius: 7, padding: "4px 9px", fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 3, fontFamily: "'DM Mono',monospace" }}><Check /> OK</div>
+                                <div style={{ color: C.mutedLight }}><Chevron open={isExp} /></div>
+                              </div>
+                            ) : (
+                              <div style={{ color: C.mutedLight, flexShrink: 0 }}><Chevron open={isExp} /></div>
+                            )}
+                          </div>
+                          {isExp && (
+                            <div onClick={e => e.stopPropagation()} style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${C.borderLight}`, animation: "fadeIn .2s" }}>
+                              {[meta.link_orientacao, meta.link_resumo, meta.link_caderno].some(l => l && l.trim() !== "") && (
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 12 }}>
+                                  {meta.link_orientacao && meta.link_orientacao.trim() !== "" && (
+                                    <a href={meta.link_orientacao} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 5, background: `${C.vermelhoAlaranjado}0F`, border: `1px solid ${C.vermelhoAlaranjado}30`, borderRadius: 7, padding: "6px 14px", fontSize: 13, fontWeight: 500, color: C.vermelhoAlaranjado }}><FileIc /> Orientação de estudos <ExtIc /></a>
+                                  )}
+                                  {meta.link_resumo && meta.link_resumo.trim() !== "" && (
+                                    <a href={meta.link_resumo} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 5, background: `${C.azulClaroVivo}0F`, border: `1px solid ${C.azulClaroVivo}30`, borderRadius: 7, padding: "6px 14px", fontSize: 13, fontWeight: 500, color: C.azulClaroVivo }}><FileIc /> Resumo <ExtIc /></a>
+                                  )}
+                                  {meta.link_caderno && meta.link_caderno.trim() !== "" && (
+                                    <a href={meta.link_caderno} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 5, background: `${C.azulEscuro}0A`, border: `1px solid ${C.azulEscuro}20`, borderRadius: 7, padding: "6px 14px", fontSize: 13, fontWeight: 500, color: C.azulEscuro }}><BookIc /> Caderno TEC <ExtIc /></a>
+                                  )}
+                                </div>
+                              )}
+
+                              {meta.dica && meta.dica.trim() !== "" && (
+                                <div style={{ marginBottom: 16 }}>
+                                  <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#3B41C5", marginBottom: 3 }}>Dica de estudos</div>
+                                  <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: C.pretoAzulado, lineHeight: 1.4 }}>{meta.dica}</div>
+                                </div>
+                              )}
+
+                              {!isDone && (
+                                <>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                                    <button className="btn" onClick={(e) => toggleTimer(meta.id, e)} style={{
+                                      display: "flex", alignItems: "center", gap: 6,
+                                      background: timerRunning === meta.id ? `${mColor}18` : C.borderLight,
+                                      color: timerRunning === meta.id ? mColor : C.muted,
+                                      border: `1px solid ${timerRunning === meta.id ? mColor + "40" : C.border}`,
+                                      padding: "7px 14px", borderRadius: 8,
+                                    }}>
+                                      {timerRunning === meta.id ? <PauseIc /> : <PlayIc />}
+                                      {timerRunning === meta.id ? "Pausar" : "Cronometrar"}
+                                    </button>
+                                    <span style={{
+                                      fontFamily: "'DM Mono',monospace", fontSize: 15, fontWeight: 500,
+                                      color: timerRunning === meta.id ? mColor : (getMetaTempo(meta.id) > 0 ? C.pretoAzulado : C.mutedLight),
+                                      minWidth: 52,
+                                      animation: timerRunning === meta.id ? "pulse 1s infinite" : "none",
+                                    }}>
+                                      {fmtTime(getMetaTempo(meta.id))}
+                                    </span>
+                                  </div>
+                                  <button className="btn" onClick={() => {
+                                    const secs = getMetaTempo(meta.id);
+                                    setModal(meta);
+                                    setForm({ qtd_questoes: "", qtd_acertos: "", link_erros: "", tempo_min: secs > 0 ? String(Math.round(secs / 60)) : "" });
+                                    setFormErr("");
+                                  }}
+                                    style={{ width: "100%", background: mColor, color: C.white, padding: "10px 16px", fontSize: 14, borderRadius: 9 }}>Concluir meta</button>
+                                </>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {view === "stats" && (
+            <div style={{ maxWidth: 720, margin: "0 auto", padding: "76px 18px 80px", animation: "fadeIn .4s" }}>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, letterSpacing: 2.5, color: C.cinzaVerdeado, textTransform: "uppercase", marginBottom: 4 }}>Desempenho</div>
+              <h1 style={{ fontFamily: "'Lora',serif", fontSize: 28, fontWeight: 700, margin: "0 0 6px", color: C.azulEscuro }}>Estatísticas</h1>
+              <p style={{ fontSize: 12, color: C.muted, fontFamily: "'DM Mono',monospace", marginBottom: 20 }}>Apenas metas normais contabilizadas</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 28 }}>
+                {[
+                  { label: "Questões", value: stats.total_questoes, bg: C.verdeClarinho, color: C.cinzaVerdeado },
+                  { label: "Acerto", value: `${stats.percentual.toFixed(1)}%`, bg: `${C.azulClaroVivo}12`, color: C.azulClaroVivo },
+                  { label: "Tempo total", value: fmtMinutes(stats.total_tempo), bg: `${C.azulEscuro}0A`, color: C.azulEscuro, icon: true },
+                  { label: "Nível", value: stats.classificacao, bg: C.laranjaClaro, color: C.vermelhoAlaranjado },
+                ].map((s, i) => (
+                  <div key={i} style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 12, padding: "16px 12px", textAlign: "center", animation: `fadeUp .4s ease ${i * .07}s both` }}>
+                    <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.muted, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 6, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+                      {s.icon && <ClockIc />}{s.label}
+                    </div>
+                    <div style={{ display: "inline-block", background: s.bg, borderRadius: 8, padding: "4px 10px" }}>
+                      <span style={{ fontFamily: "'Lora',serif", fontSize: s.label === "Nível" || s.label === "Tempo total" ? 14 : 21, fontWeight: 700, color: s.color }}>{s.value}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ fontFamily: "'Lora',serif", fontSize: 16, fontWeight: 600, marginBottom: 12, color: C.azulEscuro }}>Por Disciplina</div>
+              {Object.entries(sbd).length === 0 ? (
+                <div style={{ ...cardBase, padding: 24, textAlign: "center", color: C.muted, fontSize: 14 }}>Conclua metas para ver dados</div>
+              ) : Object.entries(sbd).map(([disc, d], i) => {
+                const p = d.q === 0 ? 0 : (d.a / d.q) * 100;
+                return (
+                  <div key={disc} style={{ ...cardBase, animation: `fadeUp .4s ease ${i * .05}s both` }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
+                      <span style={{ fontSize: 13, fontWeight: 500, color: getC(discColorMap[disc] ?? 0) }}>{disc}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        {d.t > 0 && (
+                          <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "'DM Mono',monospace", fontSize: 11, color: C.muted }}>
+                            <ClockIc />{fmtMinutes(d.t)}
+                          </span>
+                        )}
+                        <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: C.pretoAzulado }}>{p.toFixed(0)}% <span style={{ color: C.muted, fontSize: 11 }}>({d.a}/{d.q})</span></span>
+                      </div>
+                    </div>
+                    <div style={{ background: C.verdeClarinho, borderRadius: 3, height: 5, overflow: "hidden" }}>
+                      <div style={{ height: "100%", borderRadius: 3, background: getC(discColorMap[disc] ?? 0), width: `${p}%`, transition: "width .5s" }} />
+                    </div>
+                  </div>
+                );
+              })}
+              {rn.length > 0 && (
+                <div style={{ marginTop: 24 }}>
+                  <div style={{ fontFamily: "'Lora',serif", fontSize: 16, fontWeight: 600, marginBottom: 12, color: C.azulEscuro }}>Semanas</div>
+                  {Array.from({ length: semana }, (_, s) => {
+                    const sN = s + 1;
+                    const sr = rn.filter(r => { const m = metasBanco.find(x => x.id === r.meta_id); return m && m.ordem_plano >= (sN - 1) * MPW + 1 && m.ordem_plano <= sN * MPW; });
+                    const sq = sr.reduce((a, r) => a + r.qtd_questoes, 0), sa = sr.reduce((a, r) => a + r.qtd_acertos, 0);
+                    const st = sr.reduce((a, r) => a + (r.tempo_min || 0), 0);
+                    const sp = sq === 0 ? 0 : (sa / sq) * 100;
+                    return (
+                      <div key={sN} style={{ ...cardBase, borderColor: sN === semana ? C.cinzaVerdeado : C.border, display: "flex", justifyContent: "space-between", alignItems: "center", animation: `fadeUp .3s ease ${s * .03}s both` }}>
+                        <div>
+                          <span style={{ fontSize: 14, fontWeight: 600, color: C.azulEscuro }}>Semana {sN}</span>
+                          {sN === semana && <span style={{ marginLeft: 7, fontSize: 10, fontFamily: "'DM Mono',monospace", color: C.cinzaVerdeado, animation: "pulse 2s infinite" }}>ATUAL</span>}
+                          {sr.length >= MPW && sN !== semana && <span style={{ marginLeft: 7, fontSize: 10, color: C.cinzaVerdeado, fontFamily: "'DM Mono',monospace" }}>COMPLETA</span>}
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                          {st > 0 && <span style={{ display: "flex", alignItems: "center", gap: 3, fontFamily: "'DM Mono',monospace", fontSize: 11, color: C.muted }}><ClockIc />{fmtMinutes(st)}</span>}
+                          <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: C.pretoAzulado }}>{sp.toFixed(0)}% <span style={{ color: C.muted, fontSize: 11 }}>({sr.length}/{MPW})</span></span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {view === "historico" && (() => {
+            const semanasPassadas = semana > 1 ? semana - 1 : 0;
+            return (
+              <div style={{ maxWidth: 720, margin: "0 auto", padding: "76px 18px 80px", animation: "fadeIn .4s" }}>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, letterSpacing: 2.5, color: C.cinzaVerdeado, textTransform: "uppercase", marginBottom: 4 }}>Retrospectiva</div>
+                <h1 style={{ fontFamily: "'Lora',serif", fontSize: 28, fontWeight: 700, margin: "0 0 6px", color: C.azulEscuro }}>Histórico</h1>
+                <p style={{ fontSize: 12, color: C.muted, fontFamily: "'DM Mono',monospace", marginBottom: 24 }}>Assuntos estudados em semanas anteriores</p>
+
+                {semanasPassadas === 0 ? (
+                  <div style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 14, padding: "40px 24px", textAlign: "center", animation: "fadeUp .4s" }}>
+                    <div style={{ fontSize: 32, marginBottom: 12 }}>📖</div>
+                    <div style={{ fontFamily: "'Lora',serif", fontSize: 16, fontWeight: 600, color: C.azulEscuro, marginBottom: 6 }}>Nenhum histórico ainda</div>
+                    <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.5 }}>Conclua a Semana 1 para ver o histórico aqui.</div>
+                  </div>
+                ) : (
+                  Array.from({ length: semanasPassadas }, (_, idx) => {
+                    const sN = semanasPassadas - idx; // mais recente primeiro
+                    const ai = (sN - 1) * MPW + 1, af = sN * MPW;
+                    const metasSem = metasBanco.filter(m => m.ordem_plano >= ai && m.ordem_plano <= af);
+                    const respostasSem = rn.filter(r => { const m = metasBanco.find(x => x.id === r.meta_id); return m && m.ordem_plano >= ai && m.ordem_plano <= af; });
+                    const doneIds = new Set(respostasSem.map(r => r.meta_id));
+                    const metasConcluidas = metasSem.filter(m => doneIds.has(m.id));
+                    const sq = respostasSem.reduce((a, r) => a + r.qtd_questoes, 0);
+                    const sa = respostasSem.reduce((a, r) => a + r.qtd_acertos, 0);
+                    const st = respostasSem.reduce((a, r) => a + (r.tempo_min || 0), 0);
+                    const sp = sq === 0 ? 0 : (sa / sq) * 100;
+                    const completa = metasConcluidas.length >= MPW;
+
+                    // agrupar por disciplina
+                    const porDisc = metasSem.reduce((acc, m) => {
+                      if (!acc[m.disciplina]) acc[m.disciplina] = { todas: [], concluidas: [] };
+                      acc[m.disciplina].todas.push(m);
+                      if (doneIds.has(m.id)) acc[m.disciplina].concluidas.push(m);
+                      return acc;
+                    }, {});
+                    const discKeys = Object.keys(porDisc);
+
+                    const isHistExp = historicoExp.has(sN);
+                    const toggleHistorico = () => {
+                      if (metasConcluidas.length === 0) return;
+                      setHistoricoExp(prev => {
+                        const next = new Set(prev);
+                        if (next.has(sN)) next.delete(sN); else next.add(sN);
+                        return next;
+                      });
+                    };
+
+                    return (
+                      <div key={sN} style={{ marginBottom: 28, animation: `fadeUp .4s ease ${idx * .05}s both` }}>
+                        {/* cabeçalho semana */}
+                        <div
+                          onClick={toggleHistorico}
+                          style={{
+                            display: "flex", alignItems: "center", justifyContent: "space-between",
+                            background: C.white, border: `1px solid ${C.border}`,
+                            borderRadius: (metasConcluidas.length > 0 && isHistExp) ? "12px 12px 0 0" : 12,
+                            padding: "14px 18px",
+                            borderBottom: (metasConcluidas.length > 0 && isHistExp) ? `1px solid ${C.borderLight}` : undefined,
+                            cursor: metasConcluidas.length > 0 ? "pointer" : "default",
+                            transition: "background .15s",
+                          }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <div style={{
+                              width: 34, height: 34, borderRadius: "50%",
+                              background: completa ? C.verdeClarinho : C.laranjaClaro,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              color: completa ? C.cinzaVerdeado : C.vermelhoAlaranjado, flexShrink: 0,
+                            }}>
+                              {completa ? <Check /> : <HistoryIc />}
+                            </div>
+                            <div>
+                              <div style={{ fontFamily: "'Lora',serif", fontSize: 15, fontWeight: 700, color: C.azulEscuro }}>Semana {sN}</div>
+                              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.muted, marginTop: 1 }}>
+                                {metasConcluidas.length} de {metasSem.length} metas • {completa ? "Completa" : "Parcial"}
+                              </div>
+                            </div>
+                          </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 3 }}>
+                              {sq > 0 && (
+                                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, color: C.azulClaroVivo, fontWeight: 600 }}>
+                                  {sp.toFixed(0)}% acerto
+                                  <span style={{ color: C.muted, fontWeight: 400 }}> ({sa}/{sq})</span>
+                                </div>
+                              )}
+                              {st > 0 && (
+                                <div style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "'DM Mono',monospace", fontSize: 11, color: C.muted }}>
+                                  <ClockIc />{fmtMinutes(st)}
+                                </div>
+                              )}
+                            </div>
+                            {metasConcluidas.length > 0 && (
+                              <div style={{ color: C.muted, flexShrink: 0 }}>
+                                <Chevron open={isHistExp} />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* corpo: assuntos por disciplina */}
+                        {metasConcluidas.length > 0 && isHistExp && (() => {
+                          const extrasSem = gerarExtras(sN, respostas);
+                          return (
+                            <div style={{
+                              background: C.white, border: `1px solid ${C.border}`, borderTop: "none",
+                              borderRadius: "0 0 12px 12px", padding: "12px 18px 16px",
+                            }}>
+                              {discKeys.map((disc, di) => {
+                                const grp = porDisc[disc];
+                                if (grp.concluidas.length === 0) return null;
+                                const dColor = getC(di);
+                                return (
+                                  <div key={disc} style={{ marginTop: di === 0 ? 0 : 14 }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                                      <div style={{ width: 3, height: 12, borderRadius: 2, background: dColor, flexShrink: 0 }} />
+                                      <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: dColor, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>{disc}</span>
+                                      <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.muted }}>{grp.concluidas.length}/{grp.todas.length}</span>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                      {grp.concluidas.map(m => (
+                                        <div key={m.id} style={{
+                                          display: "flex", alignItems: "flex-start", gap: 8,
+                                          background: C.verdeClarinho + "80", borderRadius: 7,
+                                          padding: "7px 10px",
+                                        }}>
+                                          <div style={{ color: C.cinzaVerdeado, marginTop: 1, flexShrink: 0 }}><Check /></div>
+                                          <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ fontSize: 13, fontWeight: 500, color: C.pretoAzulado, lineHeight: 1.3 }}>{m.assunto}</div>
+                                            {m.item_edital && m.item_edital.trim() !== "" && (
+                                              <div style={{ fontFamily: "'Lora',serif", fontStyle: "italic", fontSize: 10.5, color: C.muted, marginTop: 1, lineHeight: 1.3 }}>{m.item_edital}</div>
+                                            )}
+                                            {[m.link_orientacao, m.link_resumo, m.link_caderno].some(l => l && l.trim() !== "") && (
+                                              <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 6 }}>
+                                                {m.link_orientacao && m.link_orientacao.trim() !== "" && (
+                                                  <a href={m.link_orientacao} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, color: C.vermelhoAlaranjado, fontFamily: "'DM Mono',monospace", background: C.white, padding: "3px 8px", borderRadius: 6, border: `1px solid ${C.vermelhoAlaranjado}25` }}>
+                                                    <FileIc /> Orientação <ExtIc />
+                                                  </a>
+                                                )}
+                                                {m.link_resumo && m.link_resumo.trim() !== "" && (
+                                                  <a href={m.link_resumo} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, color: C.azulClaroVivo, fontFamily: "'DM Mono',monospace", background: C.white, padding: "3px 8px", borderRadius: 6, border: `1px solid ${C.azulClaroVivo}25` }}>
+                                                    <FileIc /> Resumo <ExtIc />
+                                                  </a>
+                                                )}
+                                                {m.link_caderno && m.link_caderno.trim() !== "" && (
+                                                  <a href={m.link_caderno} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, color: C.azulEscuro, fontFamily: "'DM Mono',monospace", background: C.white, padding: "3px 8px", borderRadius: 6, border: `1px solid ${C.azulEscuro}20` }}>
+                                                    <BookIc /> Caderno TEC <ExtIc />
+                                                  </a>
+                                                )}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      ))}
+                                      {grp.todas.filter(m => !doneIds.has(m.id)).map(m => (
+                                        <div key={m.id} style={{
+                                          display: "flex", alignItems: "flex-start", gap: 8,
+                                          background: C.laranjaClaro + "60", borderRadius: 7,
+                                          padding: "7px 10px",
+                                          opacity: 0.65,
+                                        }}>
+                                          <div style={{ width: 14, height: 14, borderRadius: "50%", border: `2px solid ${C.coral}`, flexShrink: 0, marginTop: 1 }} />
+                                          <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ fontSize: 13, fontWeight: 400, color: C.muted, lineHeight: 1.3, textDecoration: "line-through" }}>{m.assunto}</div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              {extrasSem.length > 0 && (
+                                <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid ${C.borderLight}` }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                                    <div style={{ color: C.vermelhoAlaranjado }}><RepeatIc /></div>
+                                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.vermelhoAlaranjado, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>Metas Extras — Revisão de Erros</span>
+                                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.muted }}>{extrasSem.length}</span>
+                                  </div>
+                                  <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                    {extrasSem.map(ex => {
+                                      const feita = extrasDone.has(ex.extra_id);
+                                      return (
+                                        <div key={ex.extra_id} style={{
+                                          display: "flex", alignItems: "flex-start", gap: 8,
+                                          background: feita ? C.verdeClarinho + "80" : C.laranjaClaro + "80",
+                                          borderRadius: 7, padding: "7px 10px",
+                                        }}>
+                                          <div style={{ color: feita ? C.cinzaVerdeado : C.vermelhoAlaranjado, marginTop: 1, flexShrink: 0 }}>
+                                            {feita ? <Check /> : <RepeatIc />}
+                                          </div>
+                                          <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.vermelhoAlaranjado, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 1 }}>{ex.disciplina}</div>
+                                            <div style={{ fontSize: 13, fontWeight: 500, color: C.pretoAzulado, lineHeight: 1.3 }}>{ex.assunto}</div>
+                                            {ex.item_edital && ex.item_edital.trim() !== "" && (
+                                              <div style={{ fontFamily: "'Lora',serif", fontStyle: "italic", fontSize: 10.5, color: C.muted, marginTop: 1, lineHeight: 1.3 }}>{ex.item_edital}</div>
+                                            )}
+                                            {ex.link_erros && ex.link_erros.trim() !== "" && (
+                                              <a href={ex.link_erros} target="_blank" rel="noopener noreferrer" className="lp" style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 6, fontSize: 11, color: C.vermelhoAlaranjado, fontFamily: "'DM Mono',monospace", background: C.white, padding: "3px 8px", borderRadius: 6, border: `1px solid ${C.vermelhoAlaranjado}25` }}>
+                                                Caderno de erradas <ExtIc />
+                                              </a>
+                                            )}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            );
+          })()}
+
+          {modal && (
+            <div className="mo" onClick={e => { if (e.target === e.currentTarget) { setModal(null); setFormErr(""); } }}
+              style={{ position: "fixed", inset: 0, background: "rgba(30,43,56,.35)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 100, padding: 18, backdropFilter: "blur(6px)" }}>
+              <div className="mb" style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 16, padding: 22, width: "100%", maxWidth: 400, boxShadow: "0 20px 60px rgba(30,43,56,.15)" }}>
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: getC(discColorMap[modal.disciplina] ?? 0), textTransform: "uppercase", letterSpacing: 2, marginBottom: 3 }}>{modal.disciplina}</div>
+                  <div style={{ fontFamily: "'Lora',serif", fontSize: 18, fontWeight: 600, lineHeight: 1.3, color: C.azulEscuro, marginBottom: 3 }}>{modal.assunto}</div>
+                  {modal.item_edital && modal.item_edital.trim() !== "" && (
+                    <div style={{ fontFamily: "'Lora',serif", fontStyle: "italic", fontSize: 11.5, color: C.muted }}>{modal.item_edital}</div>
+                  )}
+                </div>
+                <div style={{ height: 1, background: C.borderLight, marginBottom: 16 }} />
+                {formErr && (<div style={{ background: C.laranjaClaro, border: `1px solid ${C.coral}40`, borderRadius: 8, padding: "7px 11px", fontSize: 13, color: C.vermelhoAlaranjado, marginBottom: 12 }}>{formErr}</div>)}
+                {[
+                  { key: "qtd_questoes", label: "Questões resolvidas", req: false, type: "number" },
+                  { key: "qtd_acertos", label: "Acertos", req: false, type: "number" },
+                  { key: "link_erros", label: "Link caderno de erradas", req: false, type: "text", ph: "https://..." },
+                  { key: "tempo_min", label: "Tempo de estudo (min)", req: false, type: "number", ph: "Ex: 45" },
+                ].map(f => (
+                  <div key={f.key} style={{ marginBottom: 13 }}>
+                    <label style={{ display: "block", fontSize: 11, color: C.muted, fontFamily: "'DM Mono',monospace", marginBottom: 4, textTransform: "uppercase", letterSpacing: 1.5 }}>
+                      {f.key === "tempo_min"
+                        ? <span style={{ display: "flex", alignItems: "center", gap: 5 }}><ClockIc />{f.label}</span>
+                        : f.label}
+                      {f.req && <span style={{ color: C.vermelhoAlaranjado }}>*</span>}
+                    </label>
+                    <input className="inf" type={f.type}
+                      min={f.key === "tempo_min" ? "9" : f.type === "number" ? "0" : undefined}
+                      step={f.key === "tempo_min" ? "1" : undefined}
+                      placeholder={f.ph || ""} value={form[f.key]}
+                      onChange={e => {
+                        const val = e.target.value;
+                        if (f.key === "tempo_min" && val !== "" && !/^\d+$/.test(val)) return;
+                        setForm({ ...form, [f.key]: val });
+                      }}
+                      style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, padding: "9px 11px", fontSize: 15, color: C.pretoAzulado, fontFamily: "'Inter',sans-serif" }} />
+                  </div>
+                ))}
+                <div style={{ display: "flex", gap: 9, marginTop: 16 }}>
+                  <button className="gh" onClick={() => { setModal(null); setFormErr(""); }} style={{ flex: 1, padding: "11px", borderRadius: 9, border: `1px solid ${C.border}`, background: C.white, color: C.muted, fontSize: 14, fontWeight: 500, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Cancelar</button>
+                  <button className="btn" onClick={salvar} style={{ flex: 1, padding: "11px", borderRadius: 9, background: getC(discColorMap[modal.disciplina] ?? 0), color: C.white, fontSize: 14 }}>Salvar</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Notícias - Wilson Tavares</title>
+
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Cores base */
+            --color-navy: #1E2B38;
+            --color-navy-deep: #26344F;
+            --color-sky: #94B9C9;
+            --color-teal: #739E8D;
+            --color-coral: #E25E42;
+            /* Badges / Destaques */
+            --badge-premium: #FF9481;
+            /* Laranja */
+            --badge-destaque: #4EAED9;
+            /* Azul */
+            --badge-quente: #E25E42;
+            /* Vermelho/Coral Escuro */
+
+
+            /* Cores da Marca */
+            --marca-laranja: #FFE4CC;
+            --marca-verde: #CCE5D6;
+            --marca-verde-claro: #EBF5EF;
+            --destaque-azul-claro: #94B9C9;
+            --destaque-preto-azulado: #2c344d;
+            --destaque-vermelho: #E25E42;
+            --destaque-cinza-verdeado: #739E8D;
+            --destaque-verde-suave: #CCE5D6;
+            --texto-azul-escuro: #101e3a;
+            --texto-azul-claro: #4EAED9;
+
+            /* Variáveis de Estrutura */
+            --bg-site: #f4f6F9;
+            --bg-card: #FFFFFF;
+            --border-color: #eaeaea;
+            --text-main: #333333;
+            --text-muted: #666666;
+
+            /* Superfícies */
+            --bg-page: #F7F5F1;
+            --bg-card: #FFFFFF;
+            --bg-stripe: #EBF5EF;
+            --hl-green: #CCE5D6;
+
+            /* Elementos de UI */
+            --text-muted: #6E7E8A;
+            --border-color: rgba(30, 43, 56, 0.12);
+            --radius-sm: 5px;
+            --radius-lg: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-site);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* HEADER E NAV (HERDADO) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5vw;
+            height: 62px;
+            background: var(--color-navy-deep);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-brand {
+            font-family: 'Lora', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--badge-premium);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color var(--transition-fast);
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #ffffff;
+            outline: none;
+        }
+
+        .btn-cta-nav {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--color-navy-deep);
+            background: var(--badge-premium);
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity var(--transition-fast);
+        }
+
+        .btn-cta-nav:hover {
+            opacity: 0.88;
+        }
+
+        /* MAIN LAYOUT BLOG / SIDEBAR */
+        .container {
+            max-width: 1180px;
+            margin: 100px auto 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        /* PORTAL DE NOTÍCIAS (GRID DE CARDS) */
+        .blog-header {
+            margin-bottom: 30px;
+        }
+
+        .blog-header h1 {
+            font-size: 32px;
+            color: var(--texto-azul-escuro);
+            font-weight: 800;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            display: flex;
+            transition: transform var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+
+        .post-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .post-thumbnail {
+            width: 35%;
+            background: transparent;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px 10px 10px 10px;
+        }
+
+        .post-thumbnail img {
+            max-width: 150px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            padding: 20px 10px 10px 10px;
+
+        }
+
+        .post-content {
+            padding: 20px 20px 20px 10px;
+        }
+
+        .post-category {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-coral);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .post-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--texto-azul-escuro);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .post-excerpt {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn-read-more {
+            align-self: flex-start;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--texto-azul-escuro);
+            text-decoration: none;
+            border-bottom: 2px solid var(--marca-laranja);
+            padding-bottom: 2px;
+            transition: border-color var(--transition-fast);
+        }
+
+        .btn-read-more:hover {
+            border-color: var(--color-coral);
+        }
+
+        /* SIDEBAR / CARDS DE CURSO */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-book-cover {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .course-book-cover img {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .course-badge {
+            background-color: #F6E05E;
+            color: #744210;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            align-self: flex-start;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .course-card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--texto-azul-escuro);
+            line-height: 1.2;
+        }
+
+        .course-card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            margin-top: 4px;
+        }
+
+        .course-price-box {
+            margin-bottom: 15px;
+        }
+
+        .course-price-box .price {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111;
+        }
+
+        .course-price-box .term {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .btn-comprar {
+            background-color: var(--destaque-vermelho);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-comprar:hover {
+            opacity: 0.9;
+        }
+
+        .btn-saiba {
+            border: 1px solid #ccc;
+            color: #555;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-saiba:hover {
+            background-color: #f7f7f7;
+        }
+
+        /* -------------------------------------
+           CATÁLOGO DE CURSOS (MIGRADO)
+        -------------------------------------- */
+        .catalog-section {
+            background: #fff;
+            padding: 60px 5vw;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--destaque-cinza-verdeado);
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--texto-azul-escuro);
+        }
+
+        .tabs-list {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-trigger {
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 12px 22px;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+        }
+
+        .tab-trigger:hover,
+        .tab-trigger:focus {
+            color: var(--color-navy);
+            background: var(--bg-stripe);
+            outline: none;
+        }
+
+        .tab-trigger[aria-selected="true"] {
+            color: var(--color-navy-deep);
+            background: var(--bg-card);
+            border-bottom-color: var(--color-coral);
+            border-top-color: var(--border-color);
+            border-left-color: var(--border-color);
+            border-right-color: var(--border-color);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel:not([hidden]) {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+            box-shadow: 0 2px 8px rgba(30, 43, 56, 0.06);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .cat-card:hover {
+            box-shadow: 0 10px 36px rgba(30, 43, 56, 0.13);
+            transform: translateY(-3px);
+        }
+
+        .cat-card.highlight-card {
+            border-color: var(--color-coral);
+            box-shadow: 0 4px 20px rgba(226, 94, 66, 0.15);
+            position: relative;
+        }
+
+        .cat-card.highlight-card::before {
+            content: 'MAIS VENDIDO';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            background: var(--color-coral);
+            padding: 4px 10px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .cat-cover {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            background: #E8EDF0;
+        }
+
+        .cat-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cat-details {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .badge-list {
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .badge-tag::before {
+            content: '★';
+        }
+
+        .tag-premium {
+            background: var(--badge-premium);
+            color: var(--color-navy-deep);
+        }
+
+        .tag-destaque {
+            background: var(--badge-destaque);
+            color: #ffffff;
+        }
+
+        .tag-quente {
+            background: var(--badge-quente);
+            color: #ffffff;
+        }
+
+        .cat-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-navy);
+            margin-bottom: 4px;
+        }
+
+        .cat-type {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .cat-price {
+            font-family: inherit;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--color-navy);
+            margin-bottom: 14px;
+            line-height: 1;
+        }
+
+        .cat-price span {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .cat-btn-buy {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: var(--color-coral);
+            padding: 13px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: background var(--transition-fast);
+            margin-bottom: 8px;
+            box-shadow: 0 3px 10px rgba(226, 94, 66, 0.22);
+        }
+
+        .cat-btn-buy:hover {
+            background: #c94d33;
+        }
+
+        .cat-btn-info {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border: 1.5px solid var(--border-color);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: color var(--transition-fast), border-color var(--transition-fast);
+        }
+
+        .cat-btn-info:hover {
+            color: var(--color-navy);
+            border-color: var(--color-navy);
+        }
+
+        /* FOOTER CTa */
+        .footer-cta {
+            background-color: #111a24;
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .footer-cta span {
+            color: var(--marca-laranja);
+        }
+
+        .footer-cta p {
+            color: #a0aab2;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+
+        .cta-form input {
+            flex-grow: 1;
+            padding: 15px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .cta-form button {
+            background-color: var(--texto-azul-claro);
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cta-form button:hover {
+            background-color: #3b8eb5;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 900px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .post-card {
+                flex-direction: column;
+            }
+
+            .post-thumbnail,
+            .post-content {
+                width: 100%;
+            }
+
+            .post-thumbnail {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar" aria-label="Navegação Principal">
+            <a href="index.html" class="nav-brand">Wilson Tavares<span>.</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#cursos" class="nav-link">Cursos</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="index.html#lead" class="nav-link">Gratuitos</a></li>
+                <li><a href="index.html#sobre" class="nav-link">Quem sou</a></li>
+            </ul>
+            <a href="index.html#cursos" class="btn-cta-nav">Ver cursos →</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- ÁREA DO PORTAL -->
+        <main class="news-portal">
+            <header class="blog-header">
+                <h1>Notícias e Artigos</h1>
+            </header>
+
+            <div class="news-grid">
+                <!-- Artigo SEFAZ SC -->
+                <article class="post-card">
+                    <div class="post-thumbnail">
+                        <img src="assets/SefazCE logo.png" alt="Portal SEFAZ SC">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">Concursos Fiscais</span>
+                        <h2 class="post-title">Secretaria da Fazenda de Santa Catarina: Novo Concurso AEFP Oficializado
+                        </h2>
+                        <p class="post-excerpt">Comissão formada! A Portaria nº 186/2026 marca o início dos preparativos
+                            para o preenchimento de 50 vagas de Auditor Estadual. Confira os detalhes...</p>
+                        <a href="Artigos/SefazSC/ArtigoSefazSC.html" class="btn-read-more">Ler artigo completo</a>
+                    </div>
+                </article>
+
+                <!-- Artigo SEFAZ BA -->
+                <article class="post-card">
+                    <div class="post-thumbnail">
+                        <img src="assets/SefazBahiaLogo.png" alt="Portal SEFAZ BA">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">Concursos Fiscais</span>
+                        <h2 class="post-title">Secretaria da Fazenda do Estado da Bahia (SEFAZ BA)
+                        </h2>
+                        <p class="post-excerpt">Concurso autorizado! A seleção contará com 200 vagas para Auditor Fiscal
+                            e Agente de Tributos com edital previsto para 2026. Confira as novidades...</p>
+                        <a href="Artigos/SefazBA/ArtigoSefazBA.html" class="btn-read-more">Ler artigo completo</a>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <!-- SIDEBAR DE VENDAS -->
+        <aside class="sidebar" id="sidebar-courses">
+            <!-- Cursos gerados aleatoriamente via JS -->
+        </aside>
+    </div>
+
+    <!-- CATÁLOGO INCORPORADO -->
+    <section id="cursos" class="catalog-section">
+        <header class="section-header">
+            <div class="hero-eyebrow">Catálogo</div>
+            <h2 class="hero-title">Escolha seu <em>concurso</em></h2>
+        </header>
+
+        <div class="tabs-list" role="tablist" aria-label="Selecione o estado ou modalidade do curso">
+            <button type="button" role="tab" aria-selected="true" aria-controls="panel-ce" id="tab-ce"
+                class="tab-trigger">SEFAZ CE</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-df" id="tab-df"
+                class="tab-trigger" tabindex="-1">SEFAZ DF</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-go" id="tab-go"
+                class="tab-trigger" tabindex="-1">SEFAZ GO</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-pa" id="tab-pa"
+                class="tab-trigger" tabindex="-1">SEFA PA</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-regular" id="tab-regular"
+                class="tab-trigger" tabindex="-1">Regulares</button>
+        </div>
+
+        <div id="panel-ce" role="tabpanel" tabindex="0" aria-labelledby="tab-ce" class="tab-panel">
+            <div class="course-grid">
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso LTF SEFAZ CE"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-premium">Material Premium</span></div>
+                        <h3 class="cat-name">SEFAZ CE — LTF</h3>
+                        <p class="cat-type">Legislação Tributária Facilitada</p>
+                        <p class="cat-price">R$&nbsp;347 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/d249dfa2-b88c-458a-b6bf-d5e17d095ed5"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-ce/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+
+                <article class="cat-card highlight-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso COMBO SEFAZ CE"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-quente">Super Quente</span></div>
+                        <h3 class="cat-name">COMBO SEFAZ CE</h3>
+                        <p class="cat-type">LTF + Direito Tributário + Reforma Tributária</p>
+                        <p class="cat-price">R$&nbsp;697 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/f3d8d220-f175-4d85-b651-2baed295391f"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-ce/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div id="panel-df" role="tabpanel" tabindex="0" aria-labelledby="tab-df" class="tab-panel" hidden>
+            <div class="course-grid">
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso LTF SEFAZ DF"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-premium">Material Premium</span></div>
+                        <h3 class="cat-name">SEFAZ DF — LTF</h3>
+                        <p class="cat-type">Legislação Tributária Facilitada</p>
+                        <p class="cat-price">R$&nbsp;397 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/3965b07e-8890-4339-8844-350b497d0488"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-df/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+                <article class="cat-card highlight-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso COMBO SEFAZ DF"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-quente">Super Quente</span></div>
+                        <h3 class="cat-name">COMBO SEFAZ DF</h3>
+                        <p class="cat-type">LTF + Direito Tributário + Reforma Tributária</p>
+                        <p class="cat-price">R$&nbsp;697 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/55a3fe8b-c4ee-401a-9b51-3aa457fcce39"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-df/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div id="panel-go" role="tabpanel" tabindex="0" aria-labelledby="tab-go" class="tab-panel" hidden>
+            <div class="course-grid">
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso LTF SEFAZ GO"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-premium">Material Premium</span></div>
+                        <h3 class="cat-name">SEFAZ GO — LTF</h3>
+                        <p class="cat-type">Legislação Tributária Facilitada</p>
+                        <p class="cat-price">R$&nbsp;297 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/1c13b5be-134b-4119-a5db-e502a390bd21"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-go-2/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+                <article class="cat-card highlight-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso COMBO SEFAZ GO"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-quente">Super Quente</span></div>
+                        <h3 class="cat-name">COMBO SEFAZ GO</h3>
+                        <p class="cat-type">LTF + Direito Tributário + Reforma Tributária</p>
+                        <p class="cat-price">R$&nbsp;697 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/4f189822-a5e2-4039-8aa7-193aa5878347"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefaz-go-2/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div id="panel-pa" role="tabpanel" tabindex="0" aria-labelledby="tab-pa" class="tab-panel" hidden>
+            <div class="course-grid">
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso LTF SEFA PA"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-premium">Material Premium</span></div>
+                        <h3 class="cat-name">SEFA PA — LTF</h3>
+                        <p class="cat-type">Legislação Tributária Facilitada</p>
+                        <p class="cat-price">R$&nbsp;327 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/4ff02ce7-89cd-45b8-8a28-50b4b1ab2996"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefa-pa/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+                <article class="cat-card highlight-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso COMBO SEFA PA"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-quente">Super Quente</span></div>
+                        <h3 class="cat-name">COMBO SEFA PA</h3>
+                        <p class="cat-type">LTF + Direito Tributário + Reforma Tributária</p>
+                        <p class="cat-price">R$&nbsp;697 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/b8239348-14c9-4894-9265-45337b2498b5"
+                            class="cat-btn-buy">Comprar agora</a>
+                        <a href="https://rabeloconcursos.com/ltf-sefa-pa/" class="cat-btn-info">Saiba mais</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div id="panel-regular" role="tabpanel" tabindex="0" aria-labelledby="tab-regular" class="tab-panel" hidden>
+            <div class="course-grid">
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso DTF"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-destaque">Material em Destaque</span></div>
+                        <h3 class="cat-name">DTF — Direito Tributário Facilitado</h3>
+                        <p class="cat-type">Curso regular — todos os concursos</p>
+                        <p class="cat-price">R$&nbsp;297 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/82d325e7-f425-4367-9165-ed8d1b0d4520"
+                            class="cat-btn-buy">Comprar agora</a>
+                    </div>
+                </article>
+                <article class="cat-card">
+                    <div class="cat-cover"><img src="assets/imgi_36_LTF_CE.png" alt="Capa Curso RTF"></div>
+                    <div class="cat-details">
+                        <div class="badge-list"><span class="badge-tag tag-destaque">Material em Destaque</span></div>
+                        <h3 class="cat-name">RTF — Reforma Tributária Facilitada</h3>
+                        <p class="cat-type">Curso regular — todos os concursos</p>
+                        <p class="cat-price">R$&nbsp;397 <span>à vista</span></p>
+                        <a href="https://pay.plataformatutory.com.br/checkout/8b418fde-eed9-450c-a875-d29be90e2891"
+                            class="cat-btn-buy">Comprar agora</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER DA PÁGINA -->
+    <footer class="footer-cta">
+        <h2>Receba materiais <span>gratuitos</span></h2>
+        <p>Mapas mentais e resumos direto no seu e-mail.</p>
+
+        <form class="cta-form" onsubmit="event.preventDefault();">
+            <input type="email" placeholder="seu@email.com.br" required>
+            <button type="submit">QUERO OS MATERIAIS</button>
+        </form>
+    </footer>
+
+    <!-- SCRIPT DE INTERAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-trigger');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+                    panels.forEach(p => p.setAttribute('hidden', 'true'));
+
+                    tab.setAttribute('aria-selected', 'true');
+                    const controlId = tab.getAttribute('aria-controls');
+                    const targetPanel = document.getElementById(controlId);
+                    if (targetPanel) targetPanel.removeAttribute('hidden');
+                });
+            });
+
+            // Geração de Propaganda Aleatória na Sidebar
+            const allCourses = [
+                {
+                    title: "SEFAZ CE – LTF",
+                    subtitle: "Legislação Tributária Facilitada",
+                    price: "347",
+                    url: "https://pay.plataformatutory.com.br/checkout/d249dfa2-b88c-458a-b6bf-d5e17d095ed5",
+                    img: "assets/imgi_36_LTF_CE.png"
+                },
+                {
+                    title: "COMBO SEFAZ CE",
+                    subtitle: "LTF + Direito Tributário + Reforma Tributária",
+                    price: "697",
+                    url: "https://pay.plataformatutory.com.br/checkout/f3d8d220-f175-4d85-b651-2baed295391f",
+                    img: "assets/imgi_36_LTF_CE.png"
+                },
+                {
+                    title: "DTF — Direito Tributário",
+                    subtitle: "Curso regular — todos os concursos",
+                    price: "297",
+                    url: "https://pay.plataformatutory.com.br/checkout/82d325e7-f425-4367-9165-ed8d1b0d4520",
+                    img: "assets/imgi_36_LTF_CE.png"
+                }
+            ];
+
+            const shuffled = allCourses.sort(() => 0.5 - Math.random());
+            const selectedCourses = shuffled.slice(0, 2);
+            const sidebar = document.getElementById('sidebar-courses');
+            if (sidebar) {
+                selectedCourses.forEach(course => {
+                    sidebar.innerHTML += `
+                        <div class="course-card">
+                            <div class="course-book-cover">
+                                <img src="${course.img}" alt="Capa ${course.title}">
+                            </div>
+                            <span class="course-badge">⭐ MATERIAL PREMIUM</span>
+                            <h4 class="course-card-title">${course.title}</h4>
+                            <p class="course-card-subtitle">${course.subtitle}</p>
+                            <div class="course-price-box">
+                                <span class="price">R$ ${course.price}</span> <span class="term">à vista</span>
+                            </div>
+                            <a href="${course.url}" target="_blank" class="btn-comprar" style="text-align: center; text-decoration: none; display: block;">COMPRAR AGORA</a>
+                            <a href="#cursos" class="btn-saiba" style="text-align: center; text-decoration: none; display: block;">Ver no Catálogo</a>
+                        </div>
+                    `;
+                });
+            }
+
+            // Carregamento automático de Artigos AQUI
+            async function loadArticles() {
+                // Lista de artigos que você publicar (apenas adicione os nomes aqui no futuro)
+                const articlesList = [
+                    'Artigos/ISS Manaus FCC/ArtigoISSManaus.html',
+                    'Artigos/SefazBA/ArtigoSefazBA.html',
+                    'Artigos/SefazSC/ArtigoSefazSC.html'
+                ];
+
+                let cardsHTML = '';
+                for (const url of articlesList) {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error('Falha HTTP');
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        // Puxar dinamicamente os valores das tags do artigo
+                        const title = doc.querySelector('.article-title')?.innerText || 'Título não encontrado';
+                        const logoSrc = doc.querySelector('.article-logo')?.getAttribute('src') || '';
+
+                        // Puxar o primeiro parágrafo do conteúdo principal para usar de resumo
+                        const firstPara = doc.querySelector('#conteudo-principal p');
+                        let excerpt = firstPara ? firstPara.innerText : 'Clique para ler o artigo completo...';
+                        if (excerpt.length > 450) excerpt = excerpt.substring(0, 300) + '...';
+
+                        // Montar o cartão
+                        cardsHTML += `
+                            <article class="post-card">
+                                <div class="post-thumbnail">
+                                    <img src="${logoSrc}" alt="Logo">
+                                </div>
+                                <div class="post-content">
+                                    <span class="post-category">Concursos Fiscais</span>
+                                    <h2 class="post-title">${title}</h2>
+                                    <p class="post-excerpt">${excerpt}</p>
+                                    <a href="${url}" class="btn-read-more">Ler artigo completo</a>
+                                </div>
+                            </article>
+                        `;
+                    } catch (error) {
+                        console.error(`Erro ao carregar dinamicamente ${url} (CORS ou erro de rede):`, error);
+                        return; // Cancela e mantém o HTML manual original na tela
+                    }
+                }
+
+                // Sobrescreve a grid apenas se o carregamento dinâmico funcionou completo
+                const newsGrid = document.querySelector('.news-grid');
+                if (newsGrid && cardsHTML !== '') {
+                    newsGrid.innerHTML = cardsHTML;
+                }
+            }
+            loadArticles();
+        });
+    </script>
+    <script src="dados_catalogo.js"></script>
+    <script src="render_catalogo.js"></script>
+</body>
+
+</html>

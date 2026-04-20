@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Simulado Sefaz GO — ITCMD</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #131B24;
+            --primary-light: #2C3E50;
+            --accent: #E25E42;
+            --success: #2E7D32;
+            --bg-page: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --text-main: #212121;
+            --text-muted: #2b2b2b;
+            --border-color: #EAEAEA;
+            /* Clean light gray border */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            /* Very subtle shadow */
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        .print-header {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E25E42;
+            margin-bottom: 25px;
+        }
+
+        .header-logo {
+            max-width: 25px;
+            /* Star icon size */
+            height: auto;
+        }
+
+        .prof-name {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .header-main {
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Question Container */
+        .questao {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 5px;
+            /* More compact padding */
+            margin-bottom: 100px;
+            /* Reduced margin */
+            box-shadow: var(--shadow);
+        }
+
+        /* Layout Table for Print */
+        .layout-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .layout-table td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        .question-header {
+
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .question-number {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .question-title {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .question-text {
+            font-family: 'Source Sans Pro', sans-serif;
+            padding: 1px 10px;
+            font-size: 1rem;
+            margin-bottom: 1px;
+            color: #1a1a1a;
+        }
+
+        /* Options */
+        .options-list {
+            list-style: none;
+            margin-bottom: 25px;
+            /* Tighter than 40px */
+        }
+
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1px;
+            padding: 1px 15px;
+            border: none;
+            background: transparent;
+        }
+
+        .option-label {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 25px;
+        }
+
+        .option-content {
+            font-size: 1rem;
+        }
+
+        /* Gabarito Block */
+        .gabarito-block {
+            background-color: #F8F9FA;
+            /* Neutral light background */
+            border-left: 2px solid var(--success);
+            padding: 2px 5px 1px 10px;
+            margin-top: 150px;
+        }
+
+        .gabarito-header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--success);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .gabarito-value {
+            color: var(--success);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .dispositivo-title {
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding: 15px 5px 1px 10px;
+            color: var(--primary);
+            margin-bottom: 1px;
+            display: block;
+        }
+
+        .dispositivo-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            background: #F8F9Fb;
+            padding: 5px 5px 15px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid #EEE;
+            text-indent: 1px;
+            /* Gap at the start of the text */
+        }
+
+        .comentario-text {
+            font-family: 'Lora', serif;
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-indent: 10px;
+            /* Gap at the start of the commentary */
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 100px;
+            padding-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .questao {
+                padding: 5px;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+
+            @page {
+                margin: 1.5cm;
+            }
+
+            .print-header {
+                display: table-header-group;
+                /* This is the secret for repeating table headers */
+                width: 100%;
+            }
+
+
+
+            .container {
+                display: table;
+                max-width: 100%;
+                margin: 0;
+                padding-top: 0;
+            }
+
+            .header-main {
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .questao {
+                padding: 4px;
+                margin-bottom: 5px;
+                border: 1px solid #EEE;
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+
+            .question-header {
+                margin-bottom: 2px;
+                gap: 5px;
+            }
+
+            .question-number {
+                background-color: var(--primary) !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-weight: 600;
+                font-size: 0.85rem;
+                display: inline-block;
+            }
+
+            .question-text,
+            .option-content,
+            .options-list,
+            .option-item,
+            .comentario-text,
+            .header-top,
+            .dispositivo-text {
+                font-size: 0.9rem;
+            }
+
+
+            .gabarito-block {
+                margin-top: 5px;
+                /* mínimo */
+            }
+
+
+            .gabarito-header {
+                font-size: 0.75rem;
+                margin-bottom: 2px;
+            }
+
+            .gabarito-value {
+                font-size: 0.85rem;
+                margin-bottom: 2px;
+            }
+
+            .dispositivo-title {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+            }
+
+            .fa-check-circle {
+                display: none !important;
+            }
+
+
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Using table structure for reliable repeating header in print -->
+        <table class="layout-table">
+            <thead>
+                <tr>
+                    <td>
+                        <div class="print-header">
+                            <div class="header-top">
+                                <img src="Logooficial.png" alt="Logo" class="header-logo">
+                                <span class="prof-name">Prof. Wilsinho Tavares</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="questoes-container">
+                <!-- Questions will be dynamically loaded here as <tr> rows -->
+            </tbody>
+        </table>
+
+        <footer>
+            &copy; Professor Wilsinho Tavares
+        </footer>
+    </div>
+
+    <!-- Data & Renderer -->
+    <script>
+        const questoesData = [
+            {
+                titulo: "Competência Territorial",
+                pergunta: "Marisa, domiciliada em São Paulo/SP, faleceu mantendo um imóvel localizado em Goiás. O tabelião questionou se Goiás teria competência para cobrar ITCD.\nQual é a situação legal correta?",
+                opcoes: [
+                    "Goiás não tem competência; o imposto incide no Estado do domicílio do de cujus.",
+                    "Goiás tem competência sobre imóvel situado em seu território, independentemente do domicílio do de cujus.",
+                    "São Paulo cobra, pois Marisa era domiciliada lá.",
+                    "Ambos os Estados têm competência compartilhada.",
+                    "A competência depende de onde a escritura será lavrada."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 73, I\n\"I – a transmissão causa mortis ou por doação de imóvel situado neste Estado e o direito a ele relativo, ainda que: a) o processo de inventário, arrolamento, dissolução judicial de sociedade conjugal ou de união estável esteja tramitando ou venha a tramitar em outra unidade da Federação ou no exterior; b) a escritura pública de inventário, partilha, dissolução consensual de sociedade conjugal ou de união estável seja lavrada em outra unidade da Federação; c) o doador, donatário, herdeiro, legatário, cedente ou cessionário não tenha domicílio ou residência neste Estado.\"",
+                comentario: "Goiás cobra ITCD sobre imóvel situado em seu território, independentemente de onde o de cujus era domiciliado, onde o inventário está tramitando ou onde a escritura será lavrada. O critério é exclusivamente a LOCALIZAÇÃO DO BEM IMÓVEL."
+            },
+            {
+                titulo: "Base de Cálculo e Valor de Mercado",
+                pergunta: "Roberto transferiu quota avaliada em contrato por R$ 300 mil, mas valor de mercado era R$ 750 mil. Qual é a base de cálculo?",
+                opcoes: [
+                    "R$ 300 mil pelo valor contratual.",
+                    "R$ 750 mil, pois a base é valor de mercado, e a diferença é doação presumida.",
+                    "R$ 525 mil (média entre os dois valores).",
+                    "Isento de ITCD.",
+                    "R$ 450 mil (apenas a diferença)."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 77 + Art. 72-A, VIII\nArt. 77: \"A base de cálculo do ITCD é o valor de mercado do bem ou do direito transmitido por causa mortis ou por doação, expresso em moeda nacional na data da declaração.\"\nArt. 72-A, VIII: \"A diferença positiva entre o valor de mercado... da quota ou ação e o valor nominal expresso no contrato social...\"",
+                comentario: "A base de cálculo é sempre o VALOR DE MERCADO, não o valor contratual. A diferença entre valor de mercado (R$ 750 mil) e valor contratual (R$ 300 mil) configura DOAÇÃO PRESUMIDA conforme art. 72-A, VIII."
+            },
+            {
+                titulo: "Domicílio do Doador",
+                pergunta: "Antônio, domiciliado em Goiás, doou obra de arte (bem móvel) para neto domiciliado em Minas Gerais. Qual Estado cobra ITCD?",
+                opcoes: [
+                    "Apenas Minas Gerais (domicílio do donatário).",
+                    "Goiás, pois é domicílio do doador.",
+                    "Nenhum Estado.",
+                    "Ambos os Estados.",
+                    "Apenas onde o bem está fisicamente localizado."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 73, II\n\"II – a doação de bem móvel ou direito, quando: a) o doador tiver domicílio neste Estado; b) o doador não tiver residência ou domicílio no Brasil e o donatário for domiciliado neste Estado.\"",
+                comentario: "Em DOAÇÃO DE BEM MÓVEL, a competência é do Estado do DOMICÍLIO DO DOADOR, não do donatário. Como Antônio é domiciliado em Goiás, Goiás cobra ITCD."
+            },
+            {
+                titulo: "Penalidades por Pagamento a Menor",
+                pergunta: "Carlos declarou ITCD por R$ 280 mil, mas SEFAZ arbitrou R$ 400 mil. Qual penalidade se aplica?",
+                opcoes: [
+                    "Nenhuma penalidade.",
+                    "75% sobre a diferença apurada.",
+                    "100% do ITCD devido.",
+                    "Apenas juros de mora.",
+                    "50% da diferença."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 89, II-A, b\n\"II-A – de 75% (setenta e cinco por cento)... b) da diferença do imposto apurado em ação fiscal, decorrente de pagamento do ITCD a menor que o devido, em virtude de declaração de bens ou direitos com valor inferior ao de mercado.\"",
+                comentario: "Quando há PAGAMENTO A MENOR (declaração com valor inferior ao de mercado), a lei impõe multa de 75% sobre a DIFERENÇA DO IMPOSTO apurada, não sobre o valor total."
+            },
+            {
+                titulo: "Competência Múltipla",
+                pergunta: "Marta faleceu em Goiás com: imóvel em GO (R$ 500 mil), imóvel em SP (R$ 200 mil), saldo bancário (R$ 100 mil). Qual é a base de cálculo de ITCD para GOIÁS?",
+                opcoes: [
+                    "R$ 500 mil.",
+                    "R$ 600 mil.",
+                    "R$ 800 mil.",
+                    "R$ 700 mil.",
+                    "Isento."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 2º (CE) + Art. 73, I e I-A\nArt. 73, I: imóvel situado em Goiás. Art. 73, I-A, a: bem móvel quando último domicílio do de cujus em Goiás.",
+                comentario: "Goiás cobra sobre: (1) imóvel situado em GO (R$ 500 mil) + (2) bem móvel cujo de cujus era domiciliado em GO (R$ 100 mil). Total: R$ 600 mil. O imóvel em SP não entra (será tributado por SP)."
+            },
+            {
+                titulo: "Número de Fatos Geradores",
+                pergunta: "Pedro faleceu deixando imóvel indivisível para 3 filhos em partes iguais. Quantos fatos geradores ocorrem?",
+                opcoes: [
+                    "Um único fato gerador.",
+                    "Dois fatos geradores.",
+                    "Três fatos geradores distintos, ainda que bem indivisível.",
+                    "Nenhum fato gerador.",
+                    "Apenas após divisão do bem."
+                ],
+                gabarito: "C",
+                dispositivo: "Art. 72, § 1º\n\"§ 1º Ocorrem tantos fatos geradores distintos quantos forem os herdeiros, legatários, donatários ou usufrutuários, ainda que o bem ou direito seja indivisível.\"",
+                comentario: "A lei é clara: TANTOS fatos geradores QUANTOS forem os herdeiros, AINDA QUE o bem seja INDIVISÍVEL. Portanto: 3 herdeiros = 3 fatos geradores = 3 obrigações de ITCD."
+            },
+            {
+                titulo: "Momento do Fato Gerador em Doação",
+                pergunta: "Fernanda recebeu doação de seu pai em 15 de agosto de 2024. Quando ocorre o fato gerador?",
+                opcoes: [
+                    "Na data da aceitação.",
+                    "Na data do registro.",
+                    "Na data do ato da doação.",
+                    "No encerramento do exercício.",
+                    "Na data da declaração do ITCD."
+                ],
+                gabarito: "C",
+                dispositivo: "Art. 74, II, c\n\"II – na transmissão por doação, na data: c) do ato da doação, ainda que com reserva de direito real, a título de adiantamento da legítima, ou cessão não onerosa.\"",
+                comentario: "O fato gerador da doação ocorre na DATA DO ATO DA DOAÇÃO, não na aceitação, registro ou declaração. É 15 de agosto de 2024."
+            },
+            {
+                titulo: "Doação Presumida por Falta de Comprovação",
+                pergunta: "Gustavo transferiu imóvel para filha como 'venda', mas não comprova uso de recursos próprios. Qual é a natureza da operação?",
+                opcoes: [
+                    "Venda legítima.",
+                    "Doação presumida.",
+                    "Operação nula.",
+                    "Operação sem efeito.",
+                    "Empréstimo presumido."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72-A, I\n\"Art. 72-A. Caracteriza-se doação: I – a transmissão onerosa da propriedade ou a instituição onerosa de direito real, em favor de pessoa que não comprove o pagamento por meio de recursos próprios.\"",
+                comentario: "Quando o adquirente NÃO COMPROVA RECURSOS PRÓPRIOS para a 'compra', a lei PRESUME DOAÇÃO. Não importa o nome ou a intenção das partes; o direito tributário qualifica a operação conforme a realidade econômica."
+            },
+            {
+                titulo: "Dedução de Dívidas do Espólio",
+                pergunta: "Helena faleceu com patrimônio de R$ 500 mil e dívidas de R$ 100 mil. Para qual valor calcula-se o ITCD?",
+                opcoes: [
+                    "R$ 500 mil.",
+                    "R$ 400 mil.",
+                    "R$ 300 mil.",
+                    "Depende do número de herdeiros.",
+                    "R$ 250 mil."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 77, § 7º\n\"§ 7º Devem ser deduzidas da base de cálculo do ITCD, até a abertura da sucessão, as dívidas do espólio.\"",
+                comentario: "As DÍVIDAS DO ESPÓLIO são DEDUZIDAS da base de cálculo. Portanto: R$ 500 mil – R$ 100 mil = R$ 400 mil."
+            },
+            {
+                titulo: "Penalidade por Atraso na Declaração",
+                pergunta: "Irene declarou ITCD com atraso de 90 dias. Qual penalidade?",
+                opcoes: [
+                    "Nenhuma.",
+                    "10% do imposto.",
+                    "20% do imposto.",
+                    "5% do imposto.",
+                    "Apenas juros."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 89, I\n\"I – 10% (dez por cento) do imposto devido pelo atraso na entrega da Declaração do ITCD Causa Mortis ou doação por mais de 60 (sessenta) dias.\"",
+                comentario: "ATRASO > 60 dias = 10%. ATRASO > 120 dias = 20%. Como Irene atrasou 90 dias (entre 60 e 120), aplica-se 10%."
+            },
+            {
+                titulo: "Solidariedade Tributária",
+                pergunta: "João é herdeiro de seu pai. Quem é solidariamente responsável pelo pagamento do ITCD?",
+                opcoes: [
+                    "Apenas João.",
+                    "João e o tabelião.",
+                    "João e o inventariante.",
+                    "Apenas o espólio.",
+                    "João e o Cartório de Registro."
+                ],
+                gabarito: "C",
+                dispositivo: "Art. 82, IV + Art. 83, I\nArt. 82, IV: \"o inventariante ou o testamenteiro, em relação aos atos que praticarem.\"\nArt. 83, I: \"o sucessor a qualquer título... quanto ao devido pelo de cujus... [limitado ao montante do quinhão].\"",
+                comentario: "João (sucessor/herdeiro) responde pelo ITCD até o limite de sua herança. O inventariante também responde solidariamente pelos atos praticados na administração do espólio."
+            },
+            {
+                titulo: "Parcelamento do ITCD",
+                pergunta: "José herdou bens, mas não tem dinheiro para pagar ITCD de imediato. Qual é o máximo de parcelas em transmissão causa mortis?",
+                opcoes: [
+                    "Até 12 parcelas.",
+                    "Até 24 parcelas.",
+                    "Até 48 parcelas mensais ou 8 semestrais.",
+                    "Sem possibilidade de parcelamento.",
+                    "Até 6 parcelas."
+                ],
+                gabarito: "C",
+                dispositivo: "Art. 84, § 3º, I e II\n\"§ 3º O pagamento do crédito tributário do ITCD pode ser dividido em até 48 (quarenta e oito) parcelas mensais e sucessivas, ou em até 8 (oito) parcelas semestrais e sucessivas... II – na transmissão causa mortis, quando não houver, no montante a ser partilhado, importância suficiente em dinheiro, título ou ação negociável para pagamento do imposto.\"",
+                comentario: "Transmissão causa mortis SEM RECURSOS LÍQUIDOS permite parcelamento de até 48 parcelas mensais OU 8 parcelas semestrais."
+            },
+            {
+                titulo: "Empréstimo Presumido como Doação",
+                pergunta: "Kleber 'empresta' R$ 200 mil ao filho sem prazo, sem juros, sem registro. Qual é a consequência?",
+                opcoes: [
+                    "É realmente um empréstimo.",
+                    "É presumido como doação.",
+                    "É nulo.",
+                    "Não tem efeito tributário.",
+                    "É válido se houver testemunhas."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72-A, III\n\"III – o valor recebido em contrato de empréstimo firmado entre ascendente e descendente ou entre a empresa e sócio, com ausência de: a) prazo de devolução do empréstimo; b) remuneração do capital; c) correção monetária; d) registro do contrato de empréstimo.\"",
+                comentario: "Empréstimo entre PAI E FILHO sem prazo, sem juros, sem correção e sem registro = PRESUNÇÃO DE DOAÇÃO. Kleber paga ITCD."
+            },
+            {
+                titulo: "Isenção para Imóvel Próprio",
+                pergunta: "Lucas herda imóvel avaliado em R$ 55 mil e não possui outro imóvel. É isento de ITCD?",
+                opcoes: [
+                    "Não; a isenção é apenas para R$ 20 mil.",
+                    "Sim; isenção para imóvel até R$ 60 mil se não possui outro.",
+                    "Não; a isenção é de R$ 30 mil.",
+                    "Sim; isenção total.",
+                    "Não; é tributado integralmente."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 79, VI\n\"VI – o herdeiro, legatário, donatário ou beneficiário que receber imóvel cujo valor seja igual ou inferior a R$ 60.000,00 (sessenta mil reais), desde que não possua outro imóvel.\"",
+                comentario: "Há ISENÇÃO ESPECIAL para imóvel até R$ 60 mil, DESDE QUE o herdeiro NÃO POSSUA OUTRO IMÓVEL. Lucas atende ao requisito: imóvel R$ 55 mil (< R$ 60 mil) e não possui outro = ISENTO."
+            },
+            {
+                titulo: "Não-Incidência sobre Seguro de Vida",
+                pergunta: "Marina faleceu e deixou seguro de vida de R$ 100 mil como beneficiária sua filha. Incide ITCD?",
+                opcoes: [
+                    "Sim; é bem transmitido.",
+                    "Não; há não-incidência sobre seguro de vida.",
+                    "Sim; sempre incide.",
+                    "Não; isenção automática.",
+                    "Depende do valor."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 80, § 1º, II\n\"§ 1º... II – Transmissão de: Seguro de vida, pecúlio por morte e quantias devidas: pelo empregador ao empregado; por institutos de seguro social e previdência, oficiais ou privados.\"",
+                comentario: "Há NÃO-INCIDÊNCIA expressa sobre SEGURO DE VIDA e valores de PECÚLIO POR MORTE. Portanto, Marina não paga ITCD sobre os R$ 100 mil do seguro."
+            },
+            {
+                titulo: "Antecipação da Legítima",
+                pergunta: "Beatriz recebeu em vida uma casa de sua mãe como 'antecipação da legítima'. Quando falecida a mãe, incide ITCD novamente?",
+                opcoes: [
+                    "Não; houve dupla tributação.",
+                    "Não; pois o ITCD já foi pago na data da doação (adiantamento), e não há nova incidência na sucessão.",
+                    "Não; há isenção para antecipação.",
+                    "Depende do valor.",
+                    "Apenas juros."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72, § 5º\n\"§ 5º A antecipação da legítima, a herança, o legado, ainda que gravados, e a doação com encargo sujeitam-se ao imposto como se não o fossem.\"",
+                comentario: "A antecipação da legítima É TRIBUTADA COMO DOAÇÃO no momento de sua entrega em vida. Portanto, Beatriz pagou ITCD na data do adiantamento (doação), e não pagará novamente na sucessão."
+            },
+            {
+                titulo: "Aviamento em Sociedade",
+                pergunta: "Raul herda quota em empresa com patrimônio líquido de R$ 1 milhão e aviamento (clientela consolidada) de R$ 200 mil. Qual é a base de cálculo?",
+                opcoes: [
+                    "R$ 1 milhão.",
+                    "R$ 1,2 milhão (patrimônio líquido + aviamento).",
+                    "R$ 800 mil (sem aviamento).",
+                    "R$ 200 mil (apenas aviamento).",
+                    "Depende do ramo."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 77-B, II\n\"II – na transmissão de ações de sociedades de capital fechado ou de quotas de sociedade empresária, o valor da ação ou da quota obtido por meio do patrimônio líquido ajustado a valor de mercado verificado em balanço especialmente levantado na data da declaração, acrescido de aviamento.\"",
+                comentario: "Na transmissão de quotas, a base é o PATRIMÔNIO LÍQUIDO AJUSTADO À MERCADO ACRESCIDO DE AVIAMENTO. Portanto: R$ 1 milhão + R$ 200 mil = R$ 1,2 milhão."
+            },
+            {
+                titulo: "Renúncia à Herança",
+                pergunta: "Samuel renuncia à herança sem ressalvas em benefício de sua irmã. Incide ITCD?",
+                opcoes: [
+                    "Sim; há transmissão.",
+                    "Não; há não-incidência em renúncia pura sem ressalva em benefício do monte.",
+                    "Sim; sempre há incidência.",
+                    "Não; há isenção automática.",
+                    "Depende do valor."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 80, § 1º, I, a\n\"§ 1º... I... a) em que o herdeiro, legatário ou donatário renuncie à herança, ao legado ou à doação, desde que feita sem ressalva ou condição, em benefício do monte, e não tenha o renunciante praticado qualquer ato que demonstre aceitação da herança, do legado ou da doação.\"",
+                comentario: "Renúncia SEM RESSALVAS E PURA beneficia o MONTE (não pessoa determinada) = NÃO-INCIDÊNCIA. Mas se renunciar EM FAVOR DE PESSOA DETERMINADA, aí há doação presumida e incide ITCD."
+            },
+            {
+                titulo: "Contribuinte em Doação de Bem Móvel",
+                pergunta: "Dona Helena, domiciliada em Goiás, doou joia para sobrinha domiciliada em São Paulo. Quem é contribuinte?",
+                opcoes: [
+                    "A sobrinha (donatária).",
+                    "Dona Helena (doadora).",
+                    "Ambas solidariamente.",
+                    "Ninguém.",
+                    "O Estado."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 81, II + Art. 81, Parágrafo único\nArt. 81: \"II – na transmissão por doação: a) o donatário.\"\nParágrafo único: \"Em caso de doação de bem móvel... se o donatário não residir nem for domiciliado no Estado, o contribuinte é o doador.\"",
+                comentario: "Em doação de bem móvel quando o DONATÁRIO não residir em Goiás, o DOADOR passa a ser CONTRIBUINTE. Logo, Dona Helena é contribuinte."
+            },
+            {
+                titulo: "Excedente de Quinhão",
+                pergunta: "Na partilha, um herdeiro recebeu quinhão de R$ 100 mil, mas sua cota era de R$ 80 mil. Incide ITCD sobre os R$ 20 mil?",
+                opcoes: [
+                    "Não; excedente não é tributado.",
+                    "Sim; há incidência sobre excedente de quinhão como doação.",
+                    "Apenas juros.",
+                    "Não; é isenção automática.",
+                    "Depende do número de herdeiros."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72, § 2º, II + Art. 73, III + Art. 74, II, e\nArt. 72: \"II – doação... [que] a cessão não onerosa, a renúncia em favor de determinada pessoa, a instituição convencional de direito real e o excedente de quinhão ou de meação.\"\nArt. 74, II, e: \"da partilha, que beneficiar uma das partes, em relação ao excedente de quinhão ou de meação.\"",
+                comentario: "O EXCEDENTE DE QUINHÃO (valor acima da cota legítima) é considerado DOAÇÃO pela lei. Portanto, há incidência de ITCD sobre os R$ 20 mil extras."
+            },
+            {
+                titulo: "Modalidade de Lançamento",
+                pergunta: "Daniel faleceu em 2024, mas seus herdeiros não declararam ITCD até hoje (2025). Qual modalidade de lançamento se aplica?",
+                opcoes: [
+                    "Lançamento por homologação.",
+                    "Lançamento de ofício.",
+                    "Lançamento por revisão.",
+                    "Não há lançamento possível.",
+                    "Lançamento excepcional."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 84\n\"Art. 84. O imposto deve ser calculado pelo sujeito passivo e pago antecipadamente, na forma e no prazo estabelecidos em regulamento, sem prévio exame da autoridade administrativa.\"",
+                comentario: "Quando há FALTA DE DECLARAÇÃO, a SEFAZ faz LANÇAMENTO DE OFÍCIO, pois o contribuinte não cumpriu sua obrigação de calcular e pagar antecipadamente."
+            },
+            {
+                titulo: "Direitos Reais de Garantia",
+                pergunta: "Uma hipoteca sobre imóvel do falecido é transmitida para herdeiro. Incide ITCD?",
+                opcoes: [
+                    "Sim; em toda transmissão.",
+                    "Não; direitos reais de garantia não sofrem tributação pelo ITCD.",
+                    "Sim; sempre incide.",
+                    "Depende do valor.",
+                    "Apenas juros."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72, § 4º\n\"§ 4º O disposto neste artigo não se aplica aos direitos reais de garantia – hipoteca, penhor, anticrese.\"",
+                comentario: "Direitos reais de garantia (hipoteca, penhor, anticrese) ESTÃO EXCLUÍDOS da incidência do ITCD. Logo, não há tributação."
+            },
+            {
+                titulo: "PGBL/VGBL – Previdência Privada",
+                pergunta: "Otávio faleceu deixando saldo em PGBL de R$ 200 mil como beneficiária sua esposa. Incide ITCD?",
+                opcoes: [
+                    "Não; há isenção para previdência.",
+                    "Sim; o montante acumulado em PGBL/VGBL é transmissível e tributável pelo ITCD.",
+                    "Não; há exclusão automática.",
+                    "Depende do segurador.",
+                    "Apenas juros."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 72, § 7º\n\"§ 7º A hipótese prevista no inciso I do caput compreende a transmissão do montante acumulado na provisão constituída com os aportes financeiros realizados em planos de previdência privada... (PGBL, VGBL ou outra semelhante), decorrente de resgate promovido pelos beneficiários em razão do falecimento do participante ou segurado.\"",
+                comentario: "PGBL/VGBL são TRANSMITIDOS E TRIBUTADOS no ITCD. O montante acumulado é bem transmissível causa mortis."
+            },
+            {
+                titulo: "Obrigação Acessória – JUCEG e Comprovação de Pagamento",
+                pergunta: "A JUCEG pode registrar doação de quota sem comprovação de pagamento de ITCD?",
+                opcoes: [
+                    "Sim; registro é automático.",
+                    "Não; somente com comprovação de pagamento ou parcelamento.",
+                    "Sim; sem exigências.",
+                    "Depende do gerente.",
+                    "Apenas com alvará judicial."
+                ],
+                gabarito: "B",
+                dispositivo: "Art. 88-C, III\n\"Somente com a comprovação do pagamento integral do imposto ou da concessão do parcelamento ou de sua desoneração: III – a Junta Comercial do Estado de Goiás – JUCEG pode promover o registro ou o arquivamento de qualquer ato relativo à constituição, alteração, dissolução e extinção de pessoa jurídica... que implique transmissão não onerosa de bens ou direitos.\"",
+                comentario: "JUCEG é dependente de comprovação de pagamento do ITCD. Sem isso, não registra."
+            },
+            {
+                titulo: "Fraude e Simulação",
+                pergunta: "Paulo declara falso valor em ITCD para pagar menos imposto (fraude). Qual penalidade?",
+                opcoes: [
+                    "10% do imposto.",
+                    "20% do imposto.",
+                    "75% do imposto.",
+                    "100% do imposto.",
+                    "50% do imposto."
+                ],
+                gabarito: "D",
+                dispositivo: "Art. 89, III\n\"III – de 100% (cem por cento) do valor do imposto, na falta de seu pagamento em virtude de fraude, dolo, simulação ou falsificação.\"",
+                comentario: "FRAUDE, DOLO, SIMULAÇÃO OU FALSIFICAÇÃO resultam na PENALIDADE MÁXIMA de 100% do valor do imposto."
+            }
+        ];
+
+        function renderQuestoes() {
+            const container = document.getElementById('questoes-container');
+
+            // Header main logic (only on first row)
+            const headerMain = `
+                <tr>
+                    <td>
+                        <header class="header-main">
+                            <h1>Sefaz GO — ITCMD</h1>
+                            <p class="subtitle">Lei nº 11.651/91 | Padrão FCC com Comentários</p>
+                        </header>
+                    </td>
+                </tr>
+            `;
+
+            container.innerHTML = headerMain + questoesData.map((q, index) => `
+                <tr>
+                    <td>
+                        <article class="questao">
+                            <div class="question-header">
+                        <span class="question-number">Questão ${index + 1}</span>
+                        <h2 class="question-title">${q.titulo}</h2>
+                    </div>
+                    <div class="question-text">
+                        ${q.pergunta.replace(/\n/g, '<br>')}
+                    </div>
+                    
+                    <ul class="options-list">
+                        ${q.opcoes.map((opt, i) => `
+                            <li class="option-item">
+                                <span class="option-label">${String.fromCharCode(97 + i)})</span>
+                                <span class="option-content">${opt}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+
+                    <div class="gabarito-block">
+                        <div class="gabarito-value">
+                            Resposta correta: <strong>${q.gabarito}</strong>
+                        </div>
+                        
+                        <div class="comentario-text">
+                            ${q.comentario.replace(/\n/g, '<br>')}
+                        </div>
+
+                        <span class="dispositivo-title">Dispositivo Legal:</span>
+                        <div class="dispositivo-text">
+                            ${q.dispositivo.replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                </article>
+            </td>
+        </tr>
+    `).join('');
+        }
+
+        // Initialize display
+        document.addEventListener('DOMContentLoaded', renderQuestoes);
+    </script>
+
+    <!-- Boxicons / FontAwesome for icons if needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+
+</html>
