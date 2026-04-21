@@ -649,7 +649,7 @@ img {
 }
 
 .tabela-exc tr:nth-child(odd) td {
-    background: #fff !important;
+    background: #f5f5f5 !important;
 }
 
 .tabela-exc tr:first-child td {
@@ -782,14 +782,19 @@ strong.c7 {
     color: #fff !important;
 }
 
-/* Level-2 (fundo CLARO): strong deve ser escuro */
+/* Level-2: strong herda a cor do pai (escuro na tela, branco no print) */
 .section-title.level-2 strong {
-    color: var(--primary) !important;
+    color: inherit !important;
 }
 
 /* Casos específicos de cores de destaque dentro de títulos escuros */
-.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c1 { color: #90CAF9 !important; }
-.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 { color: #F9A825 !important; }
+.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c1 {
+    color: #90CAF9 !important;
+}
+
+.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 {
+    color: #F9A825 !important;
+}
 
 /* CARD PREMIUM (lista com numeradores- Primeira linha com cabeçalho e demais com duas colunas e marcadores na primeira coluna) */
 .premium-card {
@@ -1161,11 +1166,8 @@ footer {
     }
 
     .section-title.level-2 {
-        background: linear-gradient(90deg, #131B24, #2C3E50) !important;
-        color: #fff !important;
-        border: none !important;
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
     }
 
     .section-title.level-3 {
@@ -1346,6 +1348,12 @@ footer {
         print-color-adjust: exact;
     }
 
+    .tabela-exc tr:nth-child(odd) td {
+        background: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
     .tabela-exc tr:first-child td {
         background: linear-gradient(90deg, #131B24, #2C3E50) !important;
         color: #fff !important;
@@ -1354,20 +1362,10 @@ footer {
     }
 
     /* SECTION-TITLE strongs */
-    .section-title strong {
-        color: #fff !important;
-    }
-
+    .section-title strong,
     .section-title.level-2 strong {
-        color: var(--primary) !important;
-    }
-
-    .section-title.level-2 strong.c1 {
-        color: #1565C0 !important;
-    }
-
-    .section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 {
-        color: #F9A825 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     /* CARD PREMIUM */
