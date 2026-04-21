@@ -103,7 +103,7 @@ h1 {
 .content p {
     text-indent: 18px;
     margin-bottom: 10px;
-    text-align: justify;
+    text-align: justify !important;
     hyphens: auto;
 }
 
@@ -218,8 +218,8 @@ strong.juris {
     font-size: 1rem;
     line-height: 1.5;
     width: 95%;
-    text-align: justify;
-    text-justify: inter-word;
+    text-align: justify !important;
+    text-justify: inter-word !important;
     margin-left: auto;
     margin-top: 10px;
     margin-bottom: 15px;
@@ -641,11 +641,11 @@ img {
     vertical-align: middle;
     line-height: 1.6;
     color: var(--text-main);
-    background: #fafafa;
+    background: #fafafa !important;
 }
 
 .tabela-exc tr:nth-child(odd) td {
-    background: #fff;
+    background: #fff !important;
 }
 
 .tabela-exc tr:first-child td {
@@ -774,18 +774,17 @@ strong.c7 {
 
 /* SECTION-TITLE: strongs herdam a cor do elemento pai */
 .section-title strong {
-    color: inherit;
+    color: #fff !important;
 }
 
-/* Level-2 (fundo escuro): strong.c1 → azul claro visível */
-.section-title.level-2 strong.c1 {
-    color: #90CAF9;
+/* Level-2 (fundo CLARO): strong deve ser escuro */
+.section-title.level-2 strong {
+    color: var(--primary) !important;
 }
 
-/* Level-1 (fundo escuro): strong.c6 → dourado visível */
-.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 {
-    color: #F9A825;
-}
+/* Casos específicos de cores de destaque dentro de títulos escuros */
+.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c1 { color: #90CAF9 !important; }
+.section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 { color: #F9A825 !important; }
 
 /* CARD PREMIUM (lista com numeradores- Primeira linha com cabeçalho e demais com duas colunas e marcadores na primeira coluna) */
 .premium-card {
@@ -1351,11 +1350,15 @@ footer {
 
     /* SECTION-TITLE strongs */
     .section-title strong {
-        color: inherit;
+        color: #fff !important;
+    }
+
+    .section-title.level-2 strong {
+        color: var(--primary) !important;
     }
 
     .section-title.level-2 strong.c1 {
-        color: #90CAF9 !important;
+        color: #1565C0 !important;
     }
 
     .section-title:not(.level-2):not(.level-3):not(.level-4) strong.c6 {
