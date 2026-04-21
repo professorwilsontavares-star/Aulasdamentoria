@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- ✏️ ALTERE O TÍTULO ABAIXO -->
+  <title>Prof. Wilsinho Tavares — IBS — Imposto sobre Bens e Serviços</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <!-- CSS compartilhado — caminho relativo a partir desta pasta -->
+  <link rel="stylesheet" href="../../estilo.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header-top">
+      <span class="prof-name">Direito Tributário</span>
+      <span class="prof-name">Impostos de Competência Compartilhada</span>
+    </div>
+
+    <div class="header-main">
+      <h1>IBS — Imposto sobre Bens e Serviços</h1>
+      <p class="subtitle">EC 132/2023 · LC 214/2025 · LC 227/2026</p>
+    </div>
+
+    <!-- SUMÁRIO -->
+    <div class="sumario-container">
+      <div class="sumario-header">
+        <svg class="sumario-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+        Sumário
+      </div>
+      <div class="sumario-body">
+        <ul class="sumario-list">
+          <li class="sumario-item-h1"><a href="#introducao">1. Introdução: O IVA-Dual e a Reforma Tributária</a></li>
+          <li class="sumario-item-h1"><a href="#fg">2. Fato Gerador</a></li>
+          <li class="sumario-item-h2"><a href="#incide">2.1 Hipóteses de Incidência</a></li>
+          <li class="sumario-item-h2"><a href="#naoincide">2.2 Hipóteses de Não Incidência</a></li>
+          <li class="sumario-item-h1"><a href="#bc">3. Base de Cálculo</a></li>
+          <li class="sumario-item-h1"><a href="#aliq">4. Alíquotas</a></li>
+          <li class="sumario-item-h1"><a href="#naocum">5. Não Cumulatividade Plena</a></li>
+          <li class="sumario-item-h1"><a href="#sp">6. Sujeito Passivo e Responsabilidade</a></li>
+          <li class="sumario-item-h1"><a href="#comite">7. Comitê Gestor do IBS</a></li>
+          <li class="sumario-item-h1"><a href="#pat">8. Processo Administrativo Tributário</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 1. INTRODUÇÃO -->
+    <div class="content" id="introducao">
+      <div class="section-title">Introdução: O IVA-Dual e a Reforma Tributária</div>
+
+      <p>A <strong>Emenda Constitucional n. 132/2023</strong> promoveu a maior reforma tributária da história do Brasil,
+        introduzindo o modelo do <strong>Imposto sobre Valor Agregado dual (IVA-Dual)</strong>. Esse modelo divide-se em
+        dois tributos distintos: a <strong>Contribuição de Bens e Serviços (CBS)</strong>, que é o IVA de competência da
+        União Federal, e o <strong>Imposto sobre Bens e Serviços (IBS)</strong>, que é o IVA subnacional, de competência
+        compartilhada entre Estados, Distrito Federal e Municípios, previsto no art. 156-A da Constituição Federal. A
+        regulamentação do IBS consta na <strong>Lei Complementar n. 214/2025</strong> (primeira regulamentação da
+        Reforma Tributária) e na <strong>Lei Complementar n. 227/2026</strong>. O IBS substituirá o ICMS e o ISS ao
+        término do período de transição em <strong>2033</strong>.</p>
+
+      <div class="alerta">
+        <span class="alerta-label">Atenção</span>
+        É fundamental distinguir <strong>competência tributária</strong> de <strong>capacidade tributária</strong>. A
+        competência é o poder de criar o tributo — indelegável, nos termos do art. 7° do CTN. A capacidade tributária
+        abrange a fiscalização e a arrecadação — delegável. No caso do IBS, os entes federados exercerão a capacidade
+        tributária de forma integrada e <strong>exclusivamente por meio do Comitê Gestor</strong>, nos termos do art.
+        156-B da Constituição Federal.
+      </div>
+
+      <p>O IBS é guiado por quatro princípios estruturantes:</p>
+
+      <ul class="lista">
+        <li><strong>Não cumulatividade plena</strong> — crédito integral sobre todos os insumos e bens utilizados na
+          atividade econômica, sem as restrições existentes no regime do ICMS e do IPI.</li>
+        <li><strong>Tributação no destino</strong> — o imposto é devido ao ente subnacional onde a operação é consumida,
+          eliminando estruturalmente a guerra fiscal entre os entes federados.</li>
+        <li><strong>Incidência por fora</strong> — o IBS não integra sua própria base de cálculo, garantindo maior
+          transparência tributária.</li>
+        <li><strong>Neutralidade</strong> — o tributo não deve interferir na tomada de decisões econômicas e
+          empresariais, tratando de forma isonômica bens e serviços de mesma natureza.</li>
+      </ul>
+    </div>
+
+    <!-- 2. FATO GERADOR -->
+    <div class="content" id="fg">
+      <div class="section-title">Fato Gerador — Art. 156-A da CF e LC n. 214/2025</div>
+
+      <p>O fato gerador do IBS é bastante amplo: abrange as <strong>operações onerosas com bens ou com serviços</strong>
+        e as <strong>operações não onerosas expressamente previstas na LC 214/2025</strong>, incluindo intangíveis e
+        operações de locação. No tocante aos bens imóveis, o IBS incide sobre a alienação (compra e venda, troca,
+        permuta e dação em pagamento), a locação, o licenciamento, a concessão, a cessão, o empréstimo, a doação
+        onerosa, a instituição onerosa de direitos reais e o arrendamento (inclusive mercantil). A previsão é mais
+        abrangente do que os regimes anteriores do ICMS e do ISS.</p>
+
+      <p>O conceito de <strong>fornecimento</strong> é adotado em três categorias. Segundo Eduardo Muniz Machado
+        Cavalcanti: (a) entrega ou disponibilização de bem material tangível; (b) bens imateriais e direitos, incluindo
+        instituição, aquisição, transferência, cessão, concessão, licenciamento ou disponibilização; e (c) prestação de
+        serviços pela oferta ou disponibilização de serviços.</p>
+
+      <p>O fato gerador ocorre nos seguintes momentos:</p>
+
+      <ul class="lista">
+        <li>No <strong>início do transporte</strong>, na hipótese de prestação de serviço de transporte iniciado no
+          Brasil.</li>
+        <li>No <strong>término do transporte</strong>, na prestação de serviço de transporte de carga iniciada no
+          exterior.</li>
+        <li>No <strong>término do fornecimento</strong>, nos demais serviços.</li>
+        <li>Na <strong>aquisição do bem</strong>, nas hipóteses de licitação ou leilão de bens apreendidos ou
+          abandonados promovidos pelo Poder Público.</li>
+      </ul>
+
+      <div class="section-title level-2" id="incide">2.1 Hipóteses de Incidência</div>
+
+      <table class="tabela-fg">
+        <tr>
+          <td><strong>INCIDE IBS e CBS</strong></td>
+          <td><strong>NÃO INCIDE IBS nem CBS</strong></td>
+        </tr>
+        <tr>
+          <td>Operações onerosas com bens móveis e imóveis (compra e venda, troca, permuta, dação em pagamento)</td>
+          <td>Exportações de bens e serviços</td>
+        </tr>
+        <tr>
+          <td>Prestação de serviços em geral (onerosa e, nos casos expressamente previstos, não onerosa)</td>
+          <td>Serviços de comunicação nas modalidades de radiodifusão sonora e de sons e imagens de recepção livre e
+            gratuita</td>
+        </tr>
+        <tr>
+          <td>Operações com bens imóveis: alienação, locação, licenciamento, concessão, cessão, empréstimo, doação
+            onerosa, instituição onerosa de direitos reais, arrendamento inclusive mercantil</td>
+          <td>Ouro como ativo financeiro ou instrumento cambial</td>
+        </tr>
+        <tr>
+          <td>Operações com bens imateriais e direitos: instituição, aquisição, transferência, cessão, concessão,
+            licenciamento ou disponibilização</td>
+          <td>Serviços prestados por pessoas físicas em relação de emprego com o contribuinte ou como administradores e
+            membros de conselhos</td>
+        </tr>
+        <tr>
+          <td>Locação de bens móveis e imóveis</td>
+          <td>Transferência de bens entre estabelecimentos do mesmo contribuinte (obrigatória a emissão de documento
+            fiscal eletrônico)</td>
+        </tr>
+        <tr>
+          <td>Fornecimento de brindes, bonificações e fornecimentos não onerosos expressamente previstos em lei</td>
+          <td>Transmissão de participação societária, incluindo alienação de ações ou quotas</td>
+        </tr>
+        <tr>
+          <td>Operações com ativo não circulante ou no exercício da atividade econômica do contribuinte</td>
+          <td>Transmissão de bens em decorrência de fusão, cisão, incorporação e de integralização e devolução de
+            capital</td>
+        </tr>
+        <tr>
+          <td>Aquisição de bens em licitação ou leilão de bens apreendidos ou abandonados promovidos pelo Poder Público
+          </td>
+          <td>Rendimentos financeiros e operações com títulos ou valores mobiliários que não resultem em fornecimento de
+            bens ou serviços</td>
+        </tr>
+        <tr>
+          <td>Importação de bens e serviços (o importador é contribuinte)</td>
+          <td>Recebimento de dividendos e participações societárias que não resultem em fornecimento de bens ou serviços
+          </td>
+        </tr>
+        <tr>
+          <td>Operações realizadas por plataformas digitais (inclusive domiciliadas no exterior) por intermédio de seus
+            meios</td>
+          <td>Operações da União, dos Estados, do DF e dos Municípios; entidades religiosas; partidos políticos;
+            entidades sindicais; instituições de educação e assistência social sem fins lucrativos (imunidades do art.
+            150, VI, CF)</td>
+        </tr>
+      </table>
+
+      <div class="section-title level-2" id="naoincide">2.2 Não Incidência sobre Livros e Fonogramas Nacionais</div>
+
+      <p>Não haverá incidência do IBS sobre <strong>livros, jornais, periódicos e sobre o papel destinado à sua
+          impressão</strong>, nem sobre <strong>fonogramas e videofonogramas musicais produzidos no Brasil</strong>,
+        contendo obras musicais ou literomusicais de autores brasileiros e obras em geral interpretadas por artistas
+        brasileiros, bem como os suportes materiais ou arquivos digitais que os contenham, salvo na etapa de replicação
+        industrial de mídias ópticas de leitura a laser.</p>
+    </div>
+
+    <!-- 3. BASE DE CÁLCULO -->
+    <div class="content" id="bc">
+      <div class="section-title">Base de Cálculo — Art. 12 da LC n. 214/2025</div>
+
+      <p>A base de cálculo do IBS é o <strong>valor da operação</strong>, compreendendo o valor integral cobrado pelo
+        fornecedor a qualquer título. O IBS incide <strong>por fora</strong>, não integrando sua própria base de
+        cálculo. A base de cálculo é abrangente, seguindo a lógica de simplicidade e transparência da Reforma
+        Tributária.</p>
+
+      <div class="section-title level-3">O que integra a base de cálculo (art. 12, § 1°, I a VI, LC 214/2025)</div>
+
+      <ul class="lista">
+        <li>Acréscimos decorrentes de ajuste do valor da operação.</li>
+        <li>Juros, multas, acréscimos e encargos.</li>
+        <li>Descontos concedidos sob condição (descontos condicionais).</li>
+        <li>Valor do transporte cobrado como parte do valor da operação, no transporte efetuado pelo próprio fornecedor
+          ou por sua conta e ordem.</li>
+        <li>Tributos e preços públicos, inclusive tarifas, incidentes sobre a operação ou suportados pelo fornecedor,
+          exceto os expressamente excluídos.</li>
+        <li>Demais importâncias cobradas ou recebidas como parte do valor da operação, inclusive seguros e taxas.</li>
+      </ul>
+
+      <div class="section-title level-3">O que NÃO integra a base de cálculo (art. 12, § 2°, LC 214/2025)</div>
+
+      <ul class="lista">
+        <li>O montante do próprio IBS e da CBS incidentes na operação (incidência por fora).</li>
+        <li>O montante do IPI incidente na operação.</li>
+        <li>Os descontos incondicionais.</li>
+        <li>Os reembolsos ou ressarcimentos relativos a operações por conta e ordem ou em nome de terceiros, desde que a
+          documentação fiscal seja emitida em nome do terceiro.</li>
+        <li>O montante do ICMS, do ISSQN, do PIS/PASEP e da COFINS incidentes na operação.</li>
+        <li>A contribuição de iluminação pública.</li>
+      </ul>
+
+      <div class="alerta">
+        <span class="alerta-label">Destaque</span>
+        Apesar de abrangente, a base de cálculo do IBS segue a lógica da Reforma Tributária: simplificação e
+        transparência. Os demais tributos sobre o consumo são afastados da base de cálculo do IBS, evitando a tributação
+        em cascata.
+      </div>
+    </div>
+
+    <!-- 4. ALÍQUOTAS -->
+    <div class="content" id="aliq">
+      <div class="section-title">Alíquotas — Uniformidade, Destino e Reduções Setoriais</div>
+
+      <p>A <strong>EC 132/2023</strong> determina que o IBS será <strong>uniforme em todo o território
+          nacional</strong>, com legislação e regulamentação únicas. Cada ente subnacional fixará sua própria alíquota
+        por lei específica. Caso o ente federado não institua sua alíquota, será adotada a <strong>alíquota de
+          referência</strong> determinada pelo Senado Federal para cada esfera federativa.</p>
+
+      <p>O IBS será cobrado pelo <strong>somatório das alíquotas do Estado e do Município de destino da
+          operação</strong>: nas operações interestaduais ou intermunicipais, as alíquotas aplicáveis são as dos entes
+        destinatários da mercadoria ou serviço, local onde será devido o imposto. Esta é a máxima expressão do
+        <strong>princípio do destino</strong>, que substitui o atual princípio da origem predominante no ICMS e combate
+        estruturalmente a guerra fiscal entre os entes federados.</p>
+
+      <div class="section-title level-2">Reduções Setoriais</div>
+
+      <table class="tabela-exc">
+        <tr>
+          <td class="col-exc"><strong>Setor</strong></td>
+          <td class="col-15" style="text-align:center"><strong>Redução</strong></td>
+          <td><strong>Fundamento (LC 214/2025 + CF após EC 132/2023)</strong></td>
+        </tr>
+        <tr>
+          <td>Serviços de educação, saúde, dispositivos médicos, medicamentos, alimentos ao consumo humano, produtos de
+            higiene para baixa renda, produtos agropecuários in natura, insumos agropecuários, produções artísticas e
+            culturais nacionais, comunicação institucional, atividades desportivas, bens de soberania e segurança
+            nacional</td>
+          <td style="text-align:center"><strong class="verde">60%</strong></td>
+          <td>Art. 128 da LC 214/2025. As alíquotas do IBS e da CBS incidem sobre esses setores com redução de 60% em
+            relação à alíquota-base.</td>
+        </tr>
+        <tr>
+          <td>Profissões intelectuais regulamentadas por conselho profissional: administradores, advogados, arquitetos,
+            assistentes sociais, bibliotecários, biólogos, contabilistas, economistas, engenheiros, estatísticos,
+            médicos veterinários, museólogos, químicos e outros (18 profissões listadas no art. 127 da LC 214/2025)</td>
+          <td style="text-align:center"><strong class="azul">30%</strong></td>
+          <td>Art. 127 da LC 214/2025. Redução de 30% para profissionais que exercem atividades intelectuais de natureza
+            científica, literária ou artística submetidas à fiscalização por conselho profissional.</td>
+        </tr>
+        <tr>
+          <td>Serviços de transporte público coletivo de passageiros ferroviário e hidroviário de caráter urbano,
+            semiurbano e metropolitano</td>
+          <td style="text-align:center"><strong class="laranja">100%</strong></td>
+          <td>Art. 285 da LC 214/2025. Alíquota zero do IBS e da CBS sobre o fornecimento desses serviços.</td>
+        </tr>
+        <tr>
+          <td>Cesta básica nacional de alimentos</td>
+          <td style="text-align:center"><strong>0%</strong></td>
+          <td>LC 214/2025: cesta básica sujeita à alíquota zero do IBS e da CBS, como instrumento de progressividade
+            tributária.</td>
+        </tr>
+        <tr>
+          <td>União, Estados, DF e Municípios; entidades religiosas; partidos políticos; sindicatos; instituições de
+            educação e assistência social sem fins lucrativos</td>
+          <td style="text-align:center"><strong>Imunidade</strong></td>
+          <td>Imunidades constitucionais do art. 150, VI, CF, extensíveis ao IBS e à CBS nas hipóteses correspondentes.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 5. NÃO CUMULATIVIDADE -->
+    <div class="content" id="naocum">
+      <div class="section-title">Não Cumulatividade Plena — Art. 47 da LC n. 214/2025</div>
+
+      <p>A <strong>não cumulatividade do IBS é plena</strong>, representando um avanço em relação ao regime anterior. No
+        sistema precedente (ICMS e IPI), a não cumulatividade não era integral: o creditamento sobre bens de uso e
+        consumo era vedado. Com a Reforma Tributária, o contribuinte sujeito ao regime regular do IBS poderá apropriar
+        créditos <strong>quando ocorrer a extinção dos débitos relativos às operações em que seja adquirente</strong>.
+      </p>
+
+      <p>A apropriação dos créditos será realizada de forma <strong>segregada</strong> para o IBS e para a CBS: é
+        vedada, em qualquer hipótese, a compensação de créditos de IBS com valores devidos de CBS e vice-versa. A
+        sistemática de imposto sobre imposto permanece: somente o recolhimento efetivo na operação anterior resguardará
+        o creditamento.</p>
+
+      <div class="section-title level-2">Regras de Creditamento</div>
+
+      <table class="tabela-exc">
+        <tr>
+          <td class="col-40"><strong>Situação</strong></td>
+          <td class="col-20" style="text-align:center"><strong>Crédito?</strong></td>
+          <td><strong>Observação</strong></td>
+        </tr>
+        <tr>
+          <td>Aquisição de insumos e bens utilizados preponderantemente na atividade econômica do contribuinte</td>
+          <td style="text-align:center"><strong class="verde">SIM</strong></td>
+          <td>Não cumulatividade plena: direito ao crédito na operação seguinte relativo ao imposto recolhido na
+            operação anterior.</td>
+        </tr>
+        <tr>
+          <td>Aquisição de bens e serviços de optante pelo Simples Nacional</td>
+          <td style="text-align:center"><strong class="verde">SIM (proporcional)</strong></td>
+          <td>O contribuinte sujeito ao regime regular pode se creditar dos valores do IBS e da CBS pagos pelo optante
+            pelo Simples Nacional, em montante equivalente ao devido por esse regime.</td>
+        </tr>
+        <tr>
+          <td>Optante pelo Simples Nacional como adquirente do bem ou serviço</td>
+          <td style="text-align:center"><strong class="laranja">NÃO</strong></td>
+          <td>O optante pelo Simples Nacional não pode apropriar créditos de IBS e CBS.</td>
+        </tr>
+        <tr>
+          <td>Bens e serviços de uso e consumo pessoal: joias, pedras e metais preciosos, obras de arte, bebidas
+            alcoólicas, derivados do tabaco, armas e munições, bens recreativos, esportivos e estéticos</td>
+          <td style="text-align:center"><strong class="laranja">NÃO</strong></td>
+          <td>Vedação expressa ao creditamento sobre bens de uso e consumo pessoal.</td>
+        </tr>
+        <tr>
+          <td>Fornecimento não oneroso ou a valor inferior ao de mercado para sócios, acionistas, administradores,
+            empregados e seus cônjuges e parentes até o 3° grau</td>
+          <td style="text-align:center"><strong class="laranja">NÃO</strong></td>
+          <td>Vedação ao creditamento sobre bens e serviços fornecidos de forma não onerosa para pessoas vinculadas ao
+            contribuinte.</td>
+        </tr>
+        <tr>
+          <td>Bem que venha a perecer, deteriorar-se ou ser roubado, furtado ou extraviado após a aquisição</td>
+          <td style="text-align:center"><strong>Estorno proporcional</strong></td>
+          <td>O adquirente deverá estornar o crédito proporcionalmente ao prazo de vida útil e às taxas de depreciação
+            definidos em regulamento.</td>
+        </tr>
+        <tr>
+          <td>Compensação de créditos de IBS com débitos de CBS e vice-versa</td>
+          <td style="text-align:center"><strong class="laranja">VEDADO</strong></td>
+          <td>A apropriação dos créditos é segregada: crédito de IBS somente compensa débito de IBS; crédito de CBS
+            somente compensa débito de CBS.</td>
+        </tr>
+      </table>
+
+      <div class="alerta">
+        <span class="alerta-label">Destaque</span>
+        Não se consideram bens e serviços de uso ou consumo pessoal aqueles utilizados <strong>preponderantemente na
+          atividade econômica do contribuinte</strong>. O critério de preponderância é determinante para a manutenção do
+        crédito.
+      </div>
+    </div>
+
+    <!-- 6. SUJEITO PASSIVO -->
+    <div class="content" id="sp">
+      <div class="section-title">Sujeito Passivo — Contribuinte, Responsáveis e Plataformas Digitais</div>
+
+      <p>O <strong>contribuinte do IBS</strong> é o <strong>fornecedor</strong> que realiza operações no desenvolvimento
+        de atividade econômica de modo habitual ou em volume que caracterize atividade econômica ou de forma
+        profissional, ainda que a profissão não seja regulamentada. Também são contribuintes o <strong>adquirente de
+          bens apreendidos ou abandonados</strong> em licitação ou leilão promovidos pelo Poder Público e o
+        <strong>importador</strong>.</p>
+
+      <div class="section-title level-2">Responsabilidade das Plataformas Digitais</div>
+
+      <p>A LC 214/2025 inova ao prever a <strong>responsabilidade das plataformas digitais</strong>, inclusive as
+        domiciliadas no exterior, pelas operações realizadas por seu intermédio. A responsabilidade é
+        <strong>solidária</strong>, podendo ser excluída nas seguintes hipóteses:</p>
+
+      <div class="premium-card">
+        <div class="card-header-premium">
+          <h1>Exclusão da Responsabilidade das Plataformas Digitais — LC 214/2025</h1>
+        </div>
+        <table class="premium-table">
+          <tr>
+            <td class="col-index-premium">1</td>
+            <td class="content-cell-premium"><strong>Exclusão parcial</strong> — quando a plataforma apresentar ao
+              Comitê Gestor do IBS e à RFB informações sobre as operações, identificando o fornecedor, ainda que este
+              não seja contribuinte.</td>
+          </tr>
+          <tr>
+            <td class="col-index-premium">2</td>
+            <td class="content-cell-premium"><strong>Exclusão parcial adicional</strong> — quando o processo de
+              pagamento for iniciado pela plataforma e ela apresentar as informações necessárias para o <strong>split
+                payment</strong> (segregação e recolhimento automático do IBS e da CBS na liquidação financeira da
+              operação, quando disponível).</td>
+          </tr>
+          <tr>
+            <td class="col-index-premium">3</td>
+            <td class="content-cell-premium"><strong>Exclusão integral</strong> — quando o fornecedor for residente ou
+              domiciliado no Brasil, o processo de pagamento não for iniciado pela plataforma e o fornecedor emitir o
+              documento fiscal eletrônico pelo valor total da operação realizada por meio da plataforma.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section-title level-2">Responsabilidade Solidária Geral</div>
+
+      <p>São solidariamente responsáveis pelo pagamento do IBS e da CBS:</p>
+
+      <ul class="lista">
+        <li>A pessoa ou entidade sem personalidade jurídica que adquire, importa, recebe ou mantém em depósito bem sem
+          documento fiscal idôneo.</li>
+        <li>O transportador, inclusive empresa de serviço postal ou entrega expressa, em relação a bem transportado
+          desacobertado de documento fiscal idôneo ou quando efetuar a entrega em local distinto do indicado no
+          documento.</li>
+        <li>O leiloeiro, pelo IBS e pela CBS devidos na operação realizada em leilão.</li>
+        <li>Os desenvolvedores ou fornecedores de programas e aplicativos utilizados para registro de operações que
+          contenham funções ou comandos inseridos com a finalidade de descumprir a legislação tributária.</li>
+        <li>Qualquer pessoa que concorra por atos e omissões <strong>dolosos</strong> para o descumprimento de
+          obrigações tributárias, por meio de ocultação da ocorrência ou do valor da operação ou abuso da personalidade
+          jurídica (desvio de finalidade ou confusão patrimonial).</li>
+      </ul>
+
+      <div class="alerta">
+        <span class="alerta-label">Destaque</span>
+        Em Direito Tributário não há responsabilidade objetiva. O dolo deve ser comprovado para a imputação de
+        responsabilidade solidária ao terceiro que concorreu para o descumprimento da obrigação tributária.
+      </div>
+    </div>
+
+    <!-- 7. COMITÊ GESTOR -->
+    <div class="content" id="comite">
+      <div class="section-title">Comitê Gestor do IBS — Art. 156-B da CF</div>
+
+      <p>O <strong>Comitê Gestor do IBS</strong> é o órgão responsável pela gestão e capacidade tributária do imposto.
+        Os entes federados exercerão a capacidade tributária de forma integrada e exclusivamente por seu intermédio. É
+        composto por <strong>54 membros</strong>:</p>
+
+      <ul class="lista">
+        <li><strong>27 membros</strong>, representando cada Estado e o Distrito Federal.</li>
+        <li><strong>27 membros</strong>, representando o conjunto dos Municípios e do Distrito Federal: 14
+          representantes eleitos com base nos votos de cada município, com valor igual para todos; e 13 representantes
+          eleitos com base nos votos de cada município ponderados pelas respectivas populações.</li>
+      </ul>
+
+      <table class="tabela-exc">
+        <tr>
+          <td class="col-35"><strong>Aspecto</strong></td>
+          <td><strong>Conteúdo — art. 156-B, CF + LC 214/2025 + LC 227/2026</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Função principal</strong></td>
+          <td>Exercer a capacidade tributária do IBS de forma integrada em nome dos Estados, DF e Municípios. Editar o
+            regulamento único do IBS. Aprovar disposições comuns ao IBS e à CBS por ato conjunto com o Poder Executivo
+            da União.</td>
+        </tr>
+        <tr>
+          <td><strong>Fiscalização</strong></td>
+          <td>Coordenação das atividades de fiscalização, lançamento e cobrança do IBS, realizadas pelas administrações
+            tributárias dos Estados, DF e Municípios. A fiscalização da CBS compete exclusivamente à RFB. O Comitê
+            Gestor não realiza diretamente os atos de fiscalização.</td>
+        </tr>
+        <tr>
+          <td><strong>Cobrança judicial e dívida ativa</strong></td>
+          <td>Cobrança judicial e representação administrativa do IBS pelas Procuradorias dos Estados, DF e Municípios.
+            O Comitê Gestor pode promover a inscrição em dívida ativa dos créditos tributários de IBS em caso de
+            delegação dos entes federativos, preservada a titularidade destes.</td>
+        </tr>
+        <tr>
+          <td><strong>Multas punitivas e juros de mora</strong></td>
+          <td>O valor correspondente à multa punitiva e aos juros de mora sobre ela incidentes pertence ao ente
+            federativo que promoveu a fiscalização. Caso dois ou mais entes fiscalizem o mesmo sujeito passivo no mesmo
+            período e pelos mesmos fatos geradores, o procedimento será conjunto e integrado, com rateio dos custos e
+            distribuição do produto da arrecadação pelo Comitê Gestor.</td>
+        </tr>
+      </table>
+
+      <div class="atencao">
+        <span class="atencao-label">Atenção</span>
+        A previsão de que as multas punitivas pertencem ao ente que fiscalizou pode gerar uma corrida fiscalizatória
+        entre os entes federados, com o objetivo de garantir maior arrecadação. O Comitê Gestor disciplinará a forma de
+        organização e gestão dos trabalhos conjuntos.
+      </div>
+    </div>
+
+    <!-- 8. PROCESSO ADMINISTRATIVO TRIBUTÁRIO -->
+    <div class="content" id="pat">
+      <div class="section-title">Processo Administrativo Tributário do IBS — LC n. 227/2026</div>
+
+      <p>O processo administrativo tributário do IBS foi regulamentado pela <strong>LC n. 227/2026</strong> e abrange o
+        lançamento de ofício, as penalidades por descumprimento ou cumprimento em atraso de obrigações acessórias, o
+        indeferimento de pedido de restituição e ressarcimento e outros casos previstos no regulamento único do IBS.</p>
+
+      <div class="premium-card">
+        <div class="card-header-premium">
+          <h1>Regras Processuais do Contencioso Administrativo do IBS</h1>
+        </div>
+        <table class="premium-table">
+          <tr>
+            <td class="col-index-premium">1</td>
+            <td class="content-cell-premium"><strong>Prazos contados em dias úteis</strong>, ficando suspensos entre 20
+              de dezembro e 20 de janeiro. Não há exigência de formalidade: são válidos todos os atos que cumpram sua
+              finalidade essencial.</td>
+          </tr>
+          <tr>
+            <td class="col-index-premium">2</td>
+            <td class="content-cell-premium"><strong>Prazo de impugnação: 20 dias</strong> a partir da intimação do
+              lançamento de ofício, com juntada obrigatória de todas as provas nesse momento processual.</td>
+          </tr>
+          <tr>
+            <td class="col-index-premium">3</td>
+            <td class="content-cell-premium"><strong>Recursos cabíveis no contencioso administrativo</strong> (prazo de
+              20 dias, nos termos do art. 323-G da LC 214/2025): recurso de ofício, recurso voluntário, recurso de
+              uniformização e recurso especial.</td>
+          </tr>
+          <tr>
+            <td class="col-index-premium">4</td>
+            <td class="content-cell-premium"><strong>Recurso especial: prazo de 10 dias úteis</strong>, cabível contra
+              decisão do Comitê Gestor proferida por Câmara Recursal de Julgamento ou Câmara de Julgamento de primeira
+              instância no rito sumário, ou contra decisão de órgãos do CARF que conferir à legislação comum do IBS e da
+              CBS interpretação divergente da que lhe tenha dado outra decisão, com vistas a uniformizar a
+              jurisprudência administrativa.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="alerta">
+        <span class="alerta-label">Destaque</span>
+        O IBS será efetivado completamente ao término da transição em <strong>2033</strong>, sendo cobrado
+        concomitantemente com o ICMS e o ISS até essa data. Suas regras deverão estar previstas em lei complementar, nos
+        termos do art. 156-A da Constituição Federal.
+      </div>
+    </div>
+
+    <footer>
+      Direito Tributário — IBS — Reforma Tributária (EC 132/2023 · LC 214/2025 · LC 227/2026)
+    </footer>
+
+  </div>
+</body>
+
+</html>
